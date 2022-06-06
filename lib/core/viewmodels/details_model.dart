@@ -37,7 +37,7 @@
 //     }
 //   }
 //
-//   Future deleteTransacation(Transaction transaction) async {
-//     return await _moorDatabaseService.deleteTransaction(transaction);
+//   Future deleteTransacation(Transaction transactions) async {
+//     return await _moorDatabaseService.deleteTransaction(transactions);
 //   }
 // }

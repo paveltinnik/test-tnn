@@ -70,19 +70,19 @@
 //     }
 //   }
 //
-//   void init(Transaction transaction) {
+//   void init(Transaction transactions) {
 //     // initla values are current day and month
-//     selectedMonth = transaction.month;
-//     selectedDay = transaction.day;
-//     if (transaction.type == 'income') {
+//     selectedMonth = transactions.month;
+//     selectedDay = transactions.day;
+//     if (transactions.type == 'income') {
 //       category =
-//           _categoryIconService.incomeList.elementAt(transaction.categoryindex);
+//           _categoryIconService.incomeList.elementAt(transactions.categoryindex);
 //     } else {
 //       category =
-//           _categoryIconService.expenseList.elementAt(transaction.categoryindex);
+//           _categoryIconService.expenseList.elementAt(transactions.categoryindex);
 //     }
-//     memoController.text = transaction.memo;
-//     amountController.text = transaction.amount.toString();
+//     memoController.text = transactions.memo;
+//     amountController.text = transactions.amount.toString();
 //     notifyListeners();
 //   }
 //

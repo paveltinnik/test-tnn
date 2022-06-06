@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:moneylover/ui/shared/ui_helpers.dart';
-import 'package:moneylover/ui/views/category_view.dart';
+import 'package:moneylover/ui/views/category/category_view.dart';
 import 'package:provider/provider.dart';
 
-import '../../core/database/users_database.dart';
-import '../../core/viewmodels/insert_transaction_model.dart';
+import '../../../core/database/users_database.dart';
+import '../../../core/viewmodels/insert_transaction_model.dart';
 
 class InsertUserView extends StatefulWidget {
   const InsertUserView({Key? key}) : super(key: key);
@@ -51,7 +51,6 @@ class _InsertUserViewState extends State<InsertUserView> {
                       Navigator.pop(context);
                     });
                   }
-
                     // await model.addTransaction(context);
                 ),
               )

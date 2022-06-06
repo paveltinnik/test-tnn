@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:moneylover/ui/widgets/expense_book/summary_widget.dart';
+import 'package:moneylover/ui/widgets/transactions/transaction_listview_widget.dart';
 
 class ExpenseBook extends StatelessWidget {
   @override
@@ -10,10 +11,10 @@ class ExpenseBook extends StatelessWidget {
       ),
       body: Column(
         children: <Widget>[
+          // Виджет с дооходами, расходами, балансом
           SummaryWidget(income: 0, expense: 0),
-          // ListView(
-          //
-          // ),
+          // Виджет с листом из транзакций
+          TransactionsListView(),
         ],
       ),
     );

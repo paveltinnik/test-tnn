@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:moneylover/ui/views/category_view.dart';
-import 'package:moneylover/ui/views/expense_book.dart';
-import 'package:moneylover/ui/views/home_view.dart';
-import 'package:moneylover/ui/views/insert_transaction_view.dart';
-import 'package:moneylover/ui/views/insert_user_view.dart';
-import 'package:moneylover/ui/views/users_view.dart';
+import 'package:moneylover/ui/views/category/category_view.dart';
+import 'package:moneylover/ui/views/expense_book/expense_book_view.dart';
+import 'package:moneylover/ui/views/home/home_view.dart';
+import 'package:moneylover/ui/views/transactions/edit_transaction_view.dart';
+import 'package:moneylover/ui/views/users/insert_user_view.dart';
+import 'package:moneylover/ui/views/users/users_view.dart';
 
 
 

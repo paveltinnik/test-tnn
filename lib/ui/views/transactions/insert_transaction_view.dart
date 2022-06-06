@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:moneylover/ui/shared/ui_helpers.dart';
-import 'package:moneylover/ui/views/category_view.dart';
+import 'package:moneylover/ui/views/category/category_view.dart';
 
-import '../../core/viewmodels/insert_transaction_model.dart';
+import '../../../core/viewmodels/insert_transaction_model.dart';
 
 class InsertTransactionView extends StatefulWidget {
   const InsertTransactionView({Key? key}) : super(key: key);
@@ -240,9 +240,7 @@ class InsertTransactionModel {
   String type = 'Приход';
   int cateogryIndex = 0;
 
-  InsertTransactionModel(this.selectedMonth, this.selectedDay
-      // this.type, this.cateogryIndex
-      );
+  InsertTransactionModel(this.selectedMonth, this.selectedDay);
 
   static List months = [
     'Jan',
@@ -307,136 +305,3 @@ class InsertTransactionModel {
     this.type = newType;
   }
 }
-
-// class InsertTranscationView extends StatelessWidget {
-//   // static final Category category = new Category(0, 'name', Icons.abc, Colors.black);
-//   // static final int selectedCategory = 0;
-//
-//   var model = InsertTransactionModel(
-//       InsertTransactionModel.months[DateTime.now().month - 1],
-//       DateTime.now().day.toString(),
-//       // (selectedCategory == 1) ? 'income' : 'expense',
-//       // category.index
-//   );
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//         appBar: AppBar(
-//           title: const Text('Добавить транзакцию'),
-//         ),
-//         body: SafeArea(
-//           child: Padding(
-//             padding: const EdgeInsets.all(16.0),
-//             child: ListView(
-//               children: <Widget>[
-//                 ListTile(
-//                   title: Text(
-//                       // category.name
-//                           'qwerty'
-//                   ),
-//                   leading: CircleAvatar(
-//                       child: Icon(
-//                         // category.icon
-//                         Icons.abc
-//                         ,
-//                         size: 20,
-//                       )),
-//                 ),
-//                 UIHelper.verticalSpaceMedium(),
-//                 buildTextField(
-//                     model.memoController,
-//                     'Название:',
-//                     "Введите название для транзакции",
-//                     Icons.edit,
-//                     false
-//                 ),
-//                 UIHelper.verticalSpaceMedium(),
-//                 buildTextField(
-//                     model.amountController,
-//                     'Сумма:',
-//                     "Введите сумму для транзакции",
-//                     Icons.attach_money,
-//                     true),
-//                 UIHelper.verticalSpaceMedium(),
-//                 TextButton(
-//                   style: TextButton.styleFrom(
-//                     textStyle: const TextStyle(fontSize: 20),
-//                   ),
-//                   onPressed: () {},
-//                   child: const Text('Enabled'),
-//                 ),
-//                 UIHelper.verticalSpaceMedium(),
-//                 Align(
-//                   alignment: Alignment.centerLeft,
-//                   child: Text(
-//                     'Выберите дату:',
-//                     style: TextStyle(fontStyle: FontStyle.italic, fontSize: 16),
-//                   ),
-//                 ),
-//                 Divider(
-//                   thickness: 2,
-//                 ),
-//                 Container(
-//                   width: 20,
-//                   height: 50,
-//                   child: ElevatedButton(
-//                     child: Text(model.getSelectedDate()),
-//                     onPressed: () async {
-//                       await model.selectDate(context);
-//                     },
-//                   ),
-//                 ),
-//                 UIHelper.verticalSpaceLarge(),
-//                 Align(
-//                   alignment: Alignment.centerLeft,
-//                   child: ElevatedButton(
-//                     child: Text(
-//                       'Добавить',
-//                       style: TextStyle(fontSize: 16),
-//                     ),
-//                     // color: backgroundColor,
-//                     // textColor: Colors.black,
-//                     onPressed: () async {
-//                       // await model.addTransaction(context);
-//                     },
-//                   ),
-//                 )
-//               ],
-//             ),
-//           ),
-//         ),
-//       );
-//   }
-//
-//   TextFormField buildTextField(TextEditingController controller, String text,
-//       String helperText, IconData icon, isNumeric) {
-//     return TextFormField(
-//       cursorColor: Colors.black,
-//       maxLength: isNumeric ? 10 : 40,
-//       keyboardType: isNumeric ? TextInputType.number : TextInputType.text,
-//       controller: controller,
-//       decoration: InputDecoration(
-//         border: OutlineInputBorder(),
-//         icon: Icon(
-//           icon,
-//           color: Colors.black,
-//         ),
-//         labelText: text,
-//         suffixIcon: InkWell(
-//           onTap: () {
-//             controller.clear();
-//           },
-//           child: Icon(
-//             Icons.clear,
-//             color: Colors.black,
-//           ),
-//         ),
-//         labelStyle: TextStyle(
-//           color: Color(0xFFFF000000),
-//         ),
-//         helperText: helperText,
-//       ),
-//     );
-//   }
-// }

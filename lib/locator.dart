@@ -10,7 +10,7 @@
 // //
 // // import 'core/services/category_icon_service.dart';
 // // import 'core/services/moordatabase_service.dart';
-// // import 'core/viewmodels/home_model.dart';
+// // import 'core/viewmodels/user_model.dart';
 // import 'core/viewmodels/insert_transaction_model.dart';
 //
 // GetIt locator = GetIt.instance;
