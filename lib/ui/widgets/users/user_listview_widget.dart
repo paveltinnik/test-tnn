@@ -12,7 +12,7 @@ class UsersListView extends StatefulWidget {
   final List<User> users = [User(), User()];
   final UserModel model = UserModel();
 
-  // const TransactionsListView(
+  // const UserssListView(
   //   this.transactions,
   //   this.model,
   // );
@@ -22,7 +22,7 @@ class UsersListView extends StatefulWidget {
 }
 
 class User {
-  String name = 'name';
+  String name = 'Some name';
 }
 
 class _UsersListViewState extends State<UsersListView> {
@@ -36,7 +36,7 @@ class _UsersListViewState extends State<UsersListView> {
           return Card(
             child: Slidable(
               // Specify a key if the Slidable is dismissible.
-              key: const ValueKey(0),
+              key: ValueKey(0),
 
               // The start action pane is the one at the left or the top side.
               startActionPane: ActionPane(
@@ -47,7 +47,7 @@ class _UsersListViewState extends State<UsersListView> {
                 dismissible: DismissiblePane(onDismissed: () {}),
 
                 // All actions are defined in the children parameter.
-                children: const [
+                children: [
                   // A SlidableAction can have an icon and/or a label.
                   SlidableAction(
                     onPressed: null,
@@ -60,11 +60,13 @@ class _UsersListViewState extends State<UsersListView> {
               ),
 
               // The end action pane is the one at the right or the bottom side.
-              endActionPane: const ActionPane(
+              endActionPane: ActionPane(
                 motion: ScrollMotion(),
                 children: [
                   SlidableAction(
-                    onPressed: null,
+                    onPressed: (context) {
+                      Navigator.of(context).pushNamed('edituser');
+                    },
                     backgroundColor: Color(0xFF0392CF),
                     foregroundColor: Colors.white,
                     icon: Icons.edit,

@@ -108,6 +108,29 @@ class HomeView extends StatelessWidget {
                 // ),
               ),
             ),
+            Center(
+              child: SizedBox.fromSize(
+                size: Size(150, 80),
+                child: Material(
+                  color: Colors.black12,
+                  child: InkWell(
+                    splashColor: Colors.grey,
+                    onTap: () {
+                      Navigator.of(context).pushNamed('categories');
+                    },
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(Icons.category), // <-- Icon
+                        Text("Категории"), // <-- Text
+                      ],
+                    ),
+                  ),
+                ),
+                // ),
+              ),
+            ),
           ]
         ),
       )

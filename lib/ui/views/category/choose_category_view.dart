@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
-class CategoryView extends StatefulWidget {
-  const CategoryView({Key? key}) : super(key: key);
+class ChooseCategoryView extends StatefulWidget {
+  const ChooseCategoryView({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _CategoryViewState();
+  State<StatefulWidget> createState() => _ChooseCategoryViewState();
 }
 
-class _CategoryViewState extends State<CategoryView> {
+class _ChooseCategoryViewState extends State<ChooseCategoryView> {
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text('Категория'),
+        title: Text('Категория'),
       ),
       body: SafeArea(
         child: Padding(
@@ -75,10 +75,10 @@ class _CategoryViewState extends State<CategoryView> {
     );
   }
 
-  // void _sendDataBack(BuildContext context) {
-  //   String textToSendBack = textFieldController.text;
-  //   Navigator.pop(context, textToSendBack);
-  // }
+// void _sendDataBack(BuildContext context) {
+//   String textToSendBack = textFieldController.text;
+//   Navigator.pop(context, textToSendBack);
+// }
 
 
 }

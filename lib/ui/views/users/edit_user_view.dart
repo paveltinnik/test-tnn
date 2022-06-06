@@ -1,27 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:moneylover/ui/shared/ui_helpers.dart';
-import 'package:moneylover/ui/views/category/categories_view.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/database/users_database.dart';
-import '../../../core/viewmodels/insert_transaction_model.dart';
+import '../../../core/viewmodels/user/insert_edit_model.dart';
 
-class InsertUserView extends StatefulWidget {
-  const InsertUserView({Key? key}) : super(key: key);
+class EditUserView extends StatefulWidget {
+  const EditUserView({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _InsertUserViewState();
+  State<StatefulWidget> createState() => _EditUserViewState();
 }
 
-class _InsertUserViewState extends State<InsertUserView> {
-  var model = InsertUserModel();
+class _EditUserViewState extends State<EditUserView> {
+  var model = InsertEditUserModel();
   String username = '';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Добавить пользователя'),
+        title: const Text('Редактировать пользователя'),
       ),
       body: SafeArea(
         child: Padding(
@@ -35,7 +34,7 @@ class _InsertUserViewState extends State<InsertUserView> {
                 alignment: Alignment.centerLeft,
                 child: ElevatedButton(
                   child: Text(
-                    'Добавить',
+                    'Сохранить',
                     style: TextStyle(fontSize: 16),
                   ),
                   // color: backgroundColor,
@@ -91,20 +90,4 @@ class _InsertUserViewState extends State<InsertUserView> {
       ),
     );
   }
-}
-
-class InsertUserModel {
-  TextEditingController nameController = TextEditingController();
-
-  void unFocusFromTheTextField(context) {
-    FocusScope.of(context).requestFocus(new FocusNode());
-  }
-
-  // void init(int selectedCategory, int index) {
-  //   // initla values are current day and month
-  //   selectedMonth = months[DateTime.now().month - 1];
-  //   selectedDay = DateTime.now().day.toString();
-  //   type = (selectedCategory == 1) ? 'income' : 'expense';
-  //   cateogryIndex = index;
-  // }
 }

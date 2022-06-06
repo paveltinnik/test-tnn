@@ -8,7 +8,7 @@ import '../../../core/viewmodels/expense_book/expense_book_model.dart';
 // import 'package:moneymanager/core/viewmodels/user_model.dart';
 
 class TransactionsListView extends StatefulWidget {
-  final List<Transaction> transactions = [Transaction(), Transaction()];
+  final List<Transaction> transactions = [Transaction(), Transaction(), Transaction()];
   final ExpenseBookModel model = ExpenseBookModel();
 
   // const TransactionsListView(
@@ -21,11 +21,12 @@ class TransactionsListView extends StatefulWidget {
 }
 
 class Transaction {
-  String type = 'type';
+  String type = 'Приход';
   String day = '01';
   String month = '02';
   String amount = '100';
   String memo  = 'memo';
+  String userName  = 'name';
 }
 
 class _TransactionsListViewState extends State<TransactionsListView> {
@@ -63,11 +64,13 @@ class _TransactionsListViewState extends State<TransactionsListView> {
               ),
 
               // The end action pane is the one at the right or the bottom side.
-              endActionPane: const ActionPane(
+              endActionPane: ActionPane(
                 motion: ScrollMotion(),
                 children: [
                   SlidableAction(
-                    onPressed: null,
+                    onPressed: (context) {
+                      Navigator.of(context).pushNamed('edittransaction');
+                    },
                     backgroundColor: Color(0xFF0392CF),
                     foregroundColor: Colors.white,
                     icon: Icons.edit,
@@ -103,15 +106,22 @@ class _TransactionsListViewState extends State<TransactionsListView> {
                       leading: CircleAvatar(
                         radius: 25,
                         backgroundColor: Colors.blue.withOpacity(.1),
-                        // child: widget.model.getIconForCategory(
-                        //     transaction.categoryindex, transaction.type),
+                        child: Icon(Icons.description),
                       ),
                       title: Text(transaction.memo),
-                      trailing: transaction.type == 'expense'
+                      trailing: transaction.type.toLowerCase() == 'расход'
                           ? Text('- ' + transaction.amount.toString(),
                           style: TextStyle(fontSize: 20))
                           : Text(transaction.amount.toString(),
                           style: TextStyle(fontSize: 20)),
+                    ),
+                    ListTile(
+                      leading: CircleAvatar(
+                        radius: 25,
+                        backgroundColor: Colors.blue.withOpacity(.1),
+                        child: Icon(Icons.man),
+                      ),
+                      title: Text(transaction.userName),
                     ),
                   ],
                 )

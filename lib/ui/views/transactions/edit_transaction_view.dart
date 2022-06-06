@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:moneylover/ui/shared/ui_helpers.dart';
-import 'package:moneylover/ui/views/category/category_view.dart';
+import '../category/choose_category_view.dart';
 
-import '../../../core/viewmodels/insert_transaction_model.dart';
-
-class InsertTransactionView extends StatefulWidget {
-  const InsertTransactionView({Key? key}) : super(key: key);
+class EditTransactionView extends StatefulWidget {
+  const EditTransactionView({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _InsertTransactionViewState();
+  State<StatefulWidget> createState() => _EditTransactionViewState();
 }
 
-class _InsertTransactionViewState extends State<InsertTransactionView> {
+class _EditTransactionViewState extends State<EditTransactionView> {
   var model = InsertTransactionModel(
     InsertTransactionModel.months[DateTime.now().month - 1],
     DateTime.now().day.toString()
@@ -166,7 +164,7 @@ class _InsertTransactionViewState extends State<InsertTransactionView> {
                 alignment: Alignment.centerLeft,
                 child: ElevatedButton(
                   child: Text(
-                    'Редактировать',
+                    'Сохранить',
                     style: TextStyle(fontSize: 16),
                   ),
                   // color: backgroundColor,
@@ -188,7 +186,7 @@ class _InsertTransactionViewState extends State<InsertTransactionView> {
     final result = await Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => CategoryView(),
+          builder: (context) => ChooseCategoryView(),
         ));
 
     // after the SecondScreen result comes back update the Text widget with it

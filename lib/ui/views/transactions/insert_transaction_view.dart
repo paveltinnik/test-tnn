@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:moneylover/ui/shared/ui_helpers.dart';
-import 'package:moneylover/ui/views/category/category_view.dart';
+import 'package:moneylover/ui/views/category/categories_view.dart';
 
 import '../../../core/viewmodels/insert_transaction_model.dart';
+import '../category/choose_category_view.dart';
 
 class InsertTransactionView extends StatefulWidget {
   const InsertTransactionView({Key? key}) : super(key: key);
@@ -19,7 +20,7 @@ class _InsertTransactionViewState extends State<InsertTransactionView> {
     // category.index
   );
 
-
+  String transactionType = 'Приход';
   String categoryText = 'Не выбрана';
   String userText = 'Не выбран';
 
@@ -55,12 +56,14 @@ class _InsertTransactionViewState extends State<InsertTransactionView> {
                     ],
                     onChanged: (String? newValue) {
                       setState(() {
+                        transactionType = newValue!;
                         model.setType(newValue!);
                       });
                     },
                   ),
                 ],
               ),
+
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -72,7 +75,6 @@ class _InsertTransactionViewState extends State<InsertTransactionView> {
                           fontSize: 12, color: Colors.black.withOpacity(0.6)),
                     ),
                   )
-                  // Text('Категория'),
                 ],
               ),
 
@@ -188,7 +190,7 @@ class _InsertTransactionViewState extends State<InsertTransactionView> {
     final result = await Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => CategoryView(),
+          builder: (context) => ChooseCategoryView(),
         ));
 
     // after the SecondScreen result comes back update the Text widget with it
