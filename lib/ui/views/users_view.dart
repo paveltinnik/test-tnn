@@ -52,7 +52,7 @@ class _UsersViewState extends State {
           );
         } else {
           return Center(
-            child: Text('No goals found.'),
+            child: Text('Пользователи не найдены'),
           );
         }
       },
