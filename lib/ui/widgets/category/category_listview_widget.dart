@@ -9,13 +9,12 @@ import '../../../core/viewmodels/expense_book/expense_book_model.dart';
 // import 'package:moneymanager/core/viewmodels/user_model.dart';
 
 class CategoriesListView extends StatefulWidget {
-  final List<Category> categories = [Category(), Category(), Category()];
-  final CategoryModel model = CategoryModel();
+  String transactionType = 'Приход';
 
-  // const TransactionsListView(
-  //   this.transactions,
-  //   this.model,
-  // );
+  CategoriesListView(this.transactionType, {Key? key}) : super(key: key);
+
+  final CategoryModel model = CategoryModel();
+  late List<Category> categories = [Category(), Category(), Category()];
 
   @override
   _CategoriesListViewState createState() => _CategoriesListViewState();
@@ -26,6 +25,7 @@ class Category {
 }
 
 class _CategoriesListViewState extends State<CategoriesListView> {
+
   @override
   Widget build(BuildContext context) {
     return Flexible(
