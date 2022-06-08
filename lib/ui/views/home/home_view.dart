@@ -15,150 +15,66 @@ class HomeView extends StatelessWidget {
         body: GridView.count(
           scrollDirection: Axis.vertical,
           crossAxisCount: 2,
+          childAspectRatio: 2,
           children: <Widget>[
-            Center(
-              child: SizedBox.fromSize(
-                size: Size(150, 80),
-                  child: Material(
-                    color: Colors.black12,
-                    child: InkWell(
-                      splashColor: Colors.grey,
-                      onTap: () {
-                        Navigator.of(context).pushNamed('inserttransaction');
-
-                        // simpleDialogWithOption(context);
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Icon(Icons.shopping_cart), // <-- Icon
-                          Text("Добавить операцию"), // <-- Text
-                        ],
-                      ),
-                    ),
-                  ),
-                // ),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('inserttransaction');
+                  // simpleDialogWithOption(context);
+                },
+                icon: Icon(Icons.shopping_cart),
+                label: Text('Добавить операцию'),
               ),
             ),
-            Center(
-              child: SizedBox.fromSize(
-                size: Size(150, 80),
-                child: Material(
-                  color: Colors.black12,
-                  child: InkWell(
-                    splashColor: Colors.grey,
-                    onTap: () {
-                      Navigator.of(context).pushNamed('expense_book');
-                    },
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Icon(Icons.wallet), // <-- Icon
-                        Text("Книга учета"), // <-- Text
-                      ],
-                    ),
-                  ),
-                ),
-                // ),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('expense_book');
+                  // simpleDialogWithOption(context);
+                },
+                icon: Icon(Icons.wallet),
+                label: Text('Книга учета'),
               ),
             ),
-            Center(
-              child: SizedBox.fromSize(
-                size: Size(150, 80),
-                child: Material(
-                  color: Colors.black12,
-                  child: InkWell(
-                    splashColor: Colors.grey,
-                    onTap: () {},
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Icon(Icons.bar_chart), // <-- Icon
-                        Text("Статистика"), // <-- Text
-                      ],
-                    ),
-                  ),
-                ),
-                // ),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('expense_book');
+                  // simpleDialogWithOption(context);
+                },
+                icon: Icon(Icons.bar_chart),
+                label: Text('Статистика'),
               ),
             ),
-            Center(
-              child: SizedBox.fromSize(
-                size: Size(150, 80),
-                child: Material(
-                  color: Colors.black12,
-                  child: InkWell(
-                    splashColor: Colors.grey,
-                    onTap: () {
-                      Navigator.of(context).pushNamed('users');
-                    },
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Icon(Icons.people_rounded), // <-- Icon
-                        Text("Пользователи"), // <-- Text
-                      ],
-                    ),
-                  ),
-                ),
-                // ),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('users');
+                  // simpleDialogWithOption(context);
+                },
+                icon: Icon(Icons.people_rounded),
+                label: Text('Пользователи'),
               ),
             ),
-            Center(
-              child: SizedBox.fromSize(
-                size: Size(150, 80),
-                child: Material(
-                  color: Colors.black12,
-                  child: InkWell(
-                    splashColor: Colors.grey,
-                    onTap: () {
-                      Navigator.of(context).pushNamed('categories');
-                    },
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Icon(Icons.category), // <-- Icon
-                        Text("Категории"), // <-- Text
-                      ],
-                    ),
-                  ),
-                ),
-                // ),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('categories');
+                  // simpleDialogWithOption(context);
+                },
+                icon: Icon(Icons.category),
+                label: Text('Категории'),
               ),
             ),
           ]
         ),
       )
     );
-  }
-
-  simpleDialogWithOption(BuildContext context) async {
-    return await showDialog(
-        context: context,
-        barrierDismissible: true,
-        builder: (BuildContext context) {
-          return SimpleDialog(
-            title: Text('Добавить операцию'),
-            children: <Widget>[
-              SimpleDialogOption(
-                onPressed: () {
-                  Navigator.of(context).pushNamed('expense_book');
-                },
-                child: Text('Приход'),
-              ),
-              SimpleDialogOption(
-                onPressed: () {
-                  Navigator.of(context).pushNamed('expense_book');
-                },
-                child: Text('Расход'),
-              ),
-            ],
-          );
-        });
   }
 }
