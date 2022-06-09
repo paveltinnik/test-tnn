@@ -2,27 +2,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-
-import '../../../core/viewmodels/expense_book/expense_book_model.dart';
+import '../../../core/database/moor_database.dart';
 import '../../../core/viewmodels/user/user_model.dart';
-// import 'package:moneymanager/core/database/moor_database.dart';
-// import 'package:moneymanager/core/viewmodels/user_model.dart';
 
 class UsersListView extends StatefulWidget {
-  final List<User> users = [User(), User()];
-  final UserModel model = UserModel();
+  final List<User> users;
+  // final UserModel model;
 
-  // const UserssListView(
-  //   this.transactions,
-  //   this.model,
-  // );
+  const UsersListView(
+    this.users,
+    // this.model,
+  );
 
   @override
   _UsersListViewState createState() => _UsersListViewState();
-}
-
-class User {
-  String name = 'Some name';
 }
 
 class _UsersListViewState extends State<UsersListView> {
@@ -47,7 +40,7 @@ class _UsersListViewState extends State<UsersListView> {
                 dismissible: DismissiblePane(onDismissed: () {}),
 
                 // All actions are defined in the children parameter.
-                children: [
+                children: const [
                   // A SlidableAction can have an icon and/or a label.
                   SlidableAction(
                     onPressed: null,

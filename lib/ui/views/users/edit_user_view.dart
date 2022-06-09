@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:moneylover/ui/shared/ui_helpers.dart';
 import 'package:provider/provider.dart';
 
-import '../../../core/database/users_database.dart';
+import '../../../core/database/moor_database.dart';
 import '../../../core/viewmodels/user/insert_edit_model.dart';
 
 class EditUserView extends StatefulWidget {

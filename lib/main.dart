@@ -3,7 +3,7 @@ import 'package:moneylover/locator.dart';
 import 'package:moneylover/router.dart';
 import 'package:provider/provider.dart';
 
-import 'core/database/users_database.dart';
+import 'core/database/moor_database.dart';
 
 void main() {
   // setupLocator();

@@ -6,7 +6,7 @@ import 'package:moneylover/ui/widgets/users/empty_user_widget.dart';
 import 'package:moneylover/ui/widgets/users/user_listview_widget.dart';
 import 'package:provider/provider.dart';
 
-import '../../../core/database/users_database.dart';
+import '../../../core/database/moor_database.dart';
 import '../../shared/ui_helpers.dart';
 import '../../widgets/category/app_add_category.dart';
 

@@ -3,7 +3,7 @@ import 'package:moneylover/ui/shared/ui_helpers.dart';
 import 'package:moneylover/ui/views/category/categories_view.dart';
 import 'package:provider/provider.dart';
 
-import '../../../core/database/users_database.dart';
+import '../../../core/database/moor_database.dart';
 import '../../../core/viewmodels/insert_transaction_model.dart';
 
 class InsertCategoryView extends StatefulWidget {

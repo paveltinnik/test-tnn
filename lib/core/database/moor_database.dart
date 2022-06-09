@@ -1,6 +1,6 @@
 import 'package:moor_flutter/moor_flutter.dart';
 
-part 'users_database.g.dart';
+part 'moor_database.g.dart';
 
 class Users extends Table {
   TextColumn get name => text()();
@@ -22,7 +22,7 @@ class AppDatabase extends _$AppDatabase {
   @override
   int get schemaVersion => 1;
 
-// All tables have getters in the generated class - we can select the tasks table
+  // All tables have getters in the generated class - we can select the tasks table
   Future<List<User>> getAllUsers() => select(users).get();
 
   // Moor supports Streams which emit elements when the watched data changes
