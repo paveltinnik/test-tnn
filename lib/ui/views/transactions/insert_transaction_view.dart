@@ -50,7 +50,7 @@ class _InsertTransactionViewState extends State<InsertTransactionView> {
                   UIHelper.horizontalSpace(25),
                   DropdownButton(
                     value: model.getType(),
-                    items: [
+                    items: const [
                       DropdownMenuItem(child: Text('Приход'),value: 'Приход'),
                       DropdownMenuItem(child: Text('Расход'),value: 'Расход'),
                     ],

@@ -7,11 +7,11 @@ import '../../../core/viewmodels/user/user_model.dart';
 
 class UsersListView extends StatefulWidget {
   final List<User> users;
-  // final UserModel model;
+  final UserModel model;
 
   const UsersListView(
     this.users,
-    // this.model,
+    this.model,
   );
 
   @override
@@ -24,12 +24,12 @@ class _UsersListViewState extends State<UsersListView> {
     return Flexible(
       child: ListView(
         // controller: widget.model.scrollController,
-        padding: EdgeInsets.all(8),
+        padding: const EdgeInsets.all(8),
         children: widget.users.map((user) {
           return Card(
             child: Slidable(
               // Specify a key if the Slidable is dismissible.
-              key: ValueKey(0),
+              key: const ValueKey(0),
 
               // The start action pane is the one at the left or the top side.
               startActionPane: ActionPane(
@@ -90,5 +90,17 @@ class _UsersListViewState extends State<UsersListView> {
           );
       }).toList(),
     ));
+  }
+
+  void editUser(user) {
+    Navigator.pushNamed(context, "edituser", arguments: user)
+        .then((value) => {
+      if (value != null)
+        {
+          // if (value) {
+            widget.model.init()
+          // }
+        }
+    });
   }
 }

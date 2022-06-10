@@ -28,7 +28,7 @@ class AppDatabase extends _$AppDatabase {
   // Moor supports Streams which emit elements when the watched data changes
   Stream<List<User>> watchAllUsers() => select(users).watch();
 
-  Future insertUser(User user) => into(users).insert(user);
+  Future insertUser(UsersCompanion user) => into(users).insert(user);
 
   // Updates a User with a matching primary key
   Future updateUser(User user) => update(users).replace(user);

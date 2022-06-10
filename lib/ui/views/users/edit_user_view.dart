@@ -6,7 +6,7 @@ import '../../../core/database/moor_database.dart';
 import '../../../core/viewmodels/user/insert_edit_model.dart';
 
 class EditUserView extends StatefulWidget {
-  const EditUserView({Key? key}) : super(key: key);
+  const EditUserView(User user, {Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _EditUserViewState();

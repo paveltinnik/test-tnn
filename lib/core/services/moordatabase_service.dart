@@ -62,11 +62,11 @@ class MoorDatabaseService {
     return await _database.deleteUser(user);
   }
 
-  Future insertTransaction(User user) async {
+  Future insertUser(UsersCompanion user) async {
     return await _database.insertUser(user);
   }
 
-  Future updateTransaction(User user) async {
+  Future updateUser(User user) async {
     return await _database.updateUser(user);
   }
 

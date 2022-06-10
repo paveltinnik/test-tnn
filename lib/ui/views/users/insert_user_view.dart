@@ -1,63 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:moneylover/core/viewmodels/user/insert_edit_model.dart';
 import 'package:moneylover/ui/shared/ui_helpers.dart';
-import 'package:moneylover/ui/views/category/categories_view.dart';
-import 'package:provider/provider.dart';
-
 import '../../../core/database/moor_database.dart';
-import '../../../core/viewmodels/insert_transaction_model.dart';
+import '../base_view.dart';
 
-class InsertUserView extends StatefulWidget {
+class InsertUserView extends StatelessWidget {
   const InsertUserView({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _InsertUserViewState();
-}
-
-class _InsertUserViewState extends State<InsertUserView> {
-  var model = InsertUserModel();
-  String username = '';
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Добавить пользователя'),
-      ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: ListView(
-            children: <Widget>[
-              buildTextField(model.nameController, 'Имя:',
-                  "Введите имя пользователя", Icons.edit, false),
-              UIHelper.verticalSpaceMedium(),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: ElevatedButton(
-                  child: Text(
-                    'Добавить',
-                    style: TextStyle(fontSize: 16),
+    return BaseView<InsertEditUserModel>(
+        onModelReady: (model) async => await model.init(),
+        builder: (context, model, child) =>
+            Scaffold(
+              appBar: AppBar(
+                title: const Text('Добавить пользователя'),
+              ),
+              body: SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: ListView(
+                    children: <Widget>[
+                      buildTextField(model.nameController, 'Имя:',
+                          "Введите имя пользователя", Icons.edit, false),
+                      UIHelper.verticalSpaceMedium(),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: ElevatedButton(
+                            child: const Text(
+                              'Добавить',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                            // color: backgroundColor,
+                            // textColor: Colors.black,
+                            onPressed: () {
+                              model.addUser(context);
+                            }
+                          // await model.addTransaction(context);
+                        ),
+                      )
+                    ],
                   ),
-                  // color: backgroundColor,
-                  // textColor: Colors.black,
-                  onPressed: () {
-                    setState(() {
-                      UsersCompanion.insert(name: model.nameController.text);
-
-                      // AppDatabase().insertUser(User(
-                      //   name: model.nameController.text,
-                      // ));
-                      model.nameController.clear();
-                      Navigator.pop(context);
-                    });
-                  }
-                    // await model.addTransaction(context);
                 ),
-              )
-            ],
-          ),
-        ),
-      ),
+              ),
+            )
     );
   }
 
@@ -79,32 +65,16 @@ class _InsertUserViewState extends State<InsertUserView> {
           onTap: () {
             controller.clear();
           },
-          child: Icon(
+          child: const Icon(
             Icons.clear,
             color: Colors.black,
           ),
         ),
-        labelStyle: TextStyle(
+        labelStyle: const TextStyle(
           color: Color(0xFFFF000000),
         ),
         helperText: helperText,
       ),
     );
   }
-}
-
-class InsertUserModel {
-  TextEditingController nameController = TextEditingController();
-
-  void unFocusFromTheTextField(context) {
-    FocusScope.of(context).requestFocus(new FocusNode());
-  }
-
-  // void init(int selectedCategory, int index) {
-  //   // initla values are current day and month
-  //   selectedMonth = months[DateTime.now().month - 1];
-  //   selectedDay = DateTime.now().day.toString();
-  //   type = (selectedCategory == 1) ? 'income' : 'expense';
-  //   cateogryIndex = index;
-  // }
 }

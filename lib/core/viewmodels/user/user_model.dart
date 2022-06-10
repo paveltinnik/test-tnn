@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:moneylover/locator.dart';
 
 // import '../../locator.dart';
 import '../../database/moor_database.dart';
@@ -9,9 +10,9 @@ import '../base_model.dart';
 
 class UserModel extends BaseModel {
   // final MoorDatabaseService _moorDatabaseService = locator<MoorDatabaseService>();
-  final MoorDatabaseService _moorDatabaseService = MoorDatabaseService();
+  final MoorDatabaseService _moorDatabaseService = locator<MoorDatabaseService>();
 
-  ScrollController scrollController = new ScrollController(); // set controller on scrolling
+  ScrollController scrollController = ScrollController(); // set controller on scrolling
   bool show = true;
 
   List<User> users = <User>[];
@@ -21,8 +22,8 @@ class UserModel extends BaseModel {
     handleScroll();
 
     // show the loading bar
-    setState(ViewState.Busy);
-    notifyListeners();
+    // setState(ViewState.Busy);
+    // notifyListeners();
 
     users = await _moorDatabaseService.getAllUsers();
 

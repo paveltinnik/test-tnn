@@ -6,15 +6,8 @@ import 'package:provider/provider.dart';
 import 'core/database/moor_database.dart';
 
 void main() {
-  // setupLocator();
-  runApp(
-      Provider<AppDatabase>(
-        create: (context) => AppDatabase(),
-        child: MyApp(),
-        dispose: (context, db) => db.close(),
-      )
-  );
-      // const MyApp());
+  setupLocator();
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {

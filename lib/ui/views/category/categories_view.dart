@@ -18,13 +18,11 @@ class CategoriesView extends StatefulWidget {
 }
 
 class _CategoriesViewState extends State {
-  late AppDatabase _database;
 
   String transactionType = 'Приход';
 
   @override
   Widget build(BuildContext context) {
-    _database = Provider.of<AppDatabase>(context);
 
     return Scaffold(
       appBar: AppBar(
