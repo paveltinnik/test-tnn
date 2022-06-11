@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:moneylover/core/viewmodels/user/insert_edit_model.dart';
 import 'package:moneylover/ui/shared/ui_helpers.dart';
-import '../../../core/database/moor_database.dart';
 import '../base_view.dart';
 
 class InsertUserView extends StatelessWidget {
@@ -9,7 +8,7 @@ class InsertUserView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BaseView<InsertEditUserModel>(
+    return BaseView<InsertUserModel>(
         onModelReady: (model) async => await model.init(),
         builder: (context, model, child) =>
             Scaffold(

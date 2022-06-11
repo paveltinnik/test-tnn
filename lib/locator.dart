@@ -27,7 +27,7 @@ void setupLocator() {
   // locator.registerLazySingleton(() => SharedPrefrencesService());
   //!VIEWMODELS
   locator.registerFactory(() => UserModel());
-  locator.registerFactory(() => InsertEditUserModel());
+  locator.registerFactory(() => InsertUserModel());
   locator.registerFactory(() => EditUserModel());
   // locator.registerSingleton<UserModel>(UserModel());
   // locator.registerFactory(() => DetailsModel());

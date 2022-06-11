@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:moneylover/core/viewmodels/user/edit_user_model.dart';
 import 'package:moneylover/ui/shared/ui_helpers.dart';
-import 'package:provider/provider.dart';
 
 import '../../../core/database/moor_database.dart';
-import '../../../core/viewmodels/user/insert_edit_model.dart';
 import '../base_view.dart';
 
 class EditUserView extends StatelessWidget {
@@ -35,8 +33,6 @@ class EditUserView extends StatelessWidget {
                               'Сохранить',
                               style: TextStyle(fontSize: 16),
                             ),
-                            // color: backgroundColor,
-                            // textColor: Colors.black,
                             onPressed: () async {
                               await model.editUser(context, user.id);
                             }),

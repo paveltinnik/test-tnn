@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:moor/moor.dart';
 import 'package:toast/toast.dart';
-
 import '../../../locator.dart';
 import '../../database/moor_database.dart';
 import '../../services/moordatabase_service.dart';
 import '../base_model.dart';
 
-class InsertEditUserModel extends BaseModel {
+class InsertUserModel extends BaseModel {
   final MoorDatabaseService _moorDatabaseService = locator<MoorDatabaseService>();
 
   ScrollController scrollController = ScrollController(); // set controller on scrolling
@@ -19,34 +17,10 @@ class InsertEditUserModel extends BaseModel {
   bool isCollapsed = false;
 
   void unFocusFromTheTextField(context) {
-    FocusScope.of(context).requestFocus(new FocusNode());
+    FocusScope.of(context).requestFocus(FocusNode());
   }
 
   init() {
-    handleScroll();
-    notifyListeners();
-  }
-
-  void handleScroll() async {
-    scrollController.addListener(() {
-      if (scrollController.position.userScrollDirection ==
-          ScrollDirection.reverse) {
-        hideFloationButton();
-      }
-      if (scrollController.position.userScrollDirection ==
-          ScrollDirection.forward) {
-        showFloationButton();
-      }
-    });
-  }
-
-  void showFloationButton() {
-    show = true;
-    notifyListeners();
-  }
-
-  void hideFloationButton() {
-    show = false;
     notifyListeners();
   }
 
@@ -56,7 +30,7 @@ class InsertEditUserModel extends BaseModel {
     ToastContext().init(context);
 
     if (name.isEmpty) {
-      Toast.show("Please fill all the fields!", duration: Toast.lengthLong, gravity: Toast.bottom);
+      Toast.show("Пожалуйста заполните все поля!", duration: Toast.lengthLong, gravity: Toast.bottom);
       return;
     }
 
@@ -67,7 +41,7 @@ class InsertEditUserModel extends BaseModel {
     // insert it!
     await _moorDatabaseService.insertUser(newUser);
 
-    Toast.show("Added successfully!", duration: Toast.lengthShort, gravity: Toast.bottom);
+    Toast.show("Добавлено удачно!", duration: Toast.lengthShort, gravity: Toast.bottom);
 
     // return to the home
     Navigator.of(context)

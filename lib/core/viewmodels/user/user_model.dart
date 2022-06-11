@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:moneylover/locator.dart';
-
-// import '../../locator.dart';
 import '../../database/moor_database.dart';
 import '../../enums/viewstate.dart';
 import '../../services/moordatabase_service.dart';
@@ -15,11 +12,8 @@ class UserModel extends BaseModel {
   bool show = true;
 
   List<User> users = <User>[];
-  bool isCollapsed = false;
 
   init() async {
-    handleScroll();
-
     users = await _moorDatabaseService.getAllUsers();
 
     // show the list
@@ -29,29 +23,5 @@ class UserModel extends BaseModel {
 
   void deleteUser(User user) async {
     await _moorDatabaseService.deleteUser(user);
-    // notifyListeners();
 }
-
-  void handleScroll() async {
-    scrollController.addListener(() {
-      if (scrollController.position.userScrollDirection ==
-          ScrollDirection.reverse) {
-        hideFloationButton();
-      }
-      if (scrollController.position.userScrollDirection ==
-          ScrollDirection.forward) {
-        showFloationButton();
-      }
-    });
-  }
-
-  void showFloationButton() {
-    show = true;
-    notifyListeners();
-  }
-
-  void hideFloationButton() {
-    show = false;
-    notifyListeners();
-  }
 }
