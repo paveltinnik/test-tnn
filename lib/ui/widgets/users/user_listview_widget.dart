@@ -29,7 +29,7 @@ class _UsersListViewState extends State<UsersListView> {
           return Card(
             child: Slidable(
               // Specify a key if the Slidable is dismissible.
-              key: const ValueKey(0),
+              key: UniqueKey(),
 
               // The start action pane is the one at the left or the top side.
               startActionPane: ActionPane(
@@ -37,17 +37,23 @@ class _UsersListViewState extends State<UsersListView> {
                 motion: const ScrollMotion(),
 
                 // A pane can dismiss the Slidable.
-                dismissible: DismissiblePane(onDismissed: () {}),
+                dismissible: DismissiblePane(onDismissed: () {
+                  widget.model.deleteUser(user);
+                  widget.users.remove(user);
+                }),
 
                 // All actions are defined in the children parameter.
-                children: const [
+                children: [
                   // A SlidableAction can have an icon and/or a label.
                   SlidableAction(
-                    onPressed: null,
+                    onPressed: (context) {
+                      widget.model.deleteUser(user);
+                      widget.users.remove(user);
+                    },
                     backgroundColor: Color(0xFFFE4A49),
                     foregroundColor: Colors.white,
                     icon: Icons.delete,
-                    label: 'Delete',
+                    label: 'Удалить',
                   ),
                 ],
               ),
@@ -58,12 +64,12 @@ class _UsersListViewState extends State<UsersListView> {
                 children: [
                   SlidableAction(
                     onPressed: (context) {
-                      Navigator.of(context).pushNamed('edituser');
+                      Navigator.of(context).pushNamed('edituser', arguments: user);
                     },
                     backgroundColor: Color(0xFF0392CF),
                     foregroundColor: Colors.white,
                     icon: Icons.edit,
-                    label: 'Edit',
+                    label: 'Редактировать',
                   ),
                 ],
               ),
@@ -90,17 +96,5 @@ class _UsersListViewState extends State<UsersListView> {
           );
       }).toList(),
     ));
-  }
-
-  void editUser(user) {
-    Navigator.pushNamed(context, "edituser", arguments: user)
-        .then((value) => {
-      if (value != null)
-        {
-          // if (value) {
-            widget.model.init()
-          // }
-        }
-    });
   }
 }

@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:moneylover/core/viewmodels/user/edit_user_model.dart';
 import 'package:moneylover/core/viewmodels/user/insert_edit_model.dart';
 import 'package:moneylover/core/viewmodels/user/user_model.dart';
 // import 'package:moneymanager/core/services/notification_service.dart';
@@ -27,6 +28,7 @@ void setupLocator() {
   //!VIEWMODELS
   locator.registerFactory(() => UserModel());
   locator.registerFactory(() => InsertEditUserModel());
+  locator.registerFactory(() => EditUserModel());
   // locator.registerSingleton<UserModel>(UserModel());
   // locator.registerFactory(() => DetailsModel());
   // locator.registerFactory(() => EditModel());

@@ -9,7 +9,6 @@ import '../../services/moordatabase_service.dart';
 import '../base_model.dart';
 
 class UserModel extends BaseModel {
-  // final MoorDatabaseService _moorDatabaseService = locator<MoorDatabaseService>();
   final MoorDatabaseService _moorDatabaseService = locator<MoorDatabaseService>();
 
   ScrollController scrollController = ScrollController(); // set controller on scrolling
@@ -21,16 +20,17 @@ class UserModel extends BaseModel {
   init() async {
     handleScroll();
 
-    // show the loading bar
-    // setState(ViewState.Busy);
-    // notifyListeners();
-
     users = await _moorDatabaseService.getAllUsers();
 
     // show the list
     setState(ViewState.Idle);
     notifyListeners();
   }
+
+  void deleteUser(User user) async {
+    await _moorDatabaseService.deleteUser(user);
+    // notifyListeners();
+}
 
   void handleScroll() async {
     scrollController.addListener(() {

@@ -10,6 +10,7 @@ import 'package:moneylover/ui/views/users/edit_user_view.dart';
 import 'package:moneylover/ui/views/users/insert_user_view.dart';
 import 'package:moneylover/ui/views/users/users_view.dart';
 
+import 'core/database/moor_database.dart';
 
 
 class MyRouter {
@@ -28,7 +29,8 @@ class MyRouter {
       case 'newuser':
         return MaterialPageRoute(builder: (_) => InsertUserView());
       case 'edituser':
-        return MaterialPageRoute(builder: (_) => EditUserView());
+        var user = settings.arguments as User;
+        return MaterialPageRoute(builder: (_) => EditUserView(user));
       case 'edittransaction':
         return MaterialPageRoute(builder: (_) => EditTransactionView());
       case 'categories':
