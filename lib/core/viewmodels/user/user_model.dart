@@ -7,9 +7,7 @@ import '../base_model.dart';
 
 class UserModel extends BaseModel {
   final MoorDatabaseService _moorDatabaseService = locator<MoorDatabaseService>();
-
   ScrollController scrollController = ScrollController(); // set controller on scrolling
-  bool show = true;
 
   List<User> users = <User>[];
 
@@ -23,5 +21,5 @@ class UserModel extends BaseModel {
 
   void deleteUser(User user) async {
     await _moorDatabaseService.deleteUser(user);
-}
+  }
 }

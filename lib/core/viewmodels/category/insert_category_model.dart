@@ -6,15 +6,10 @@ import '../../database/moor_database.dart';
 import '../../services/moordatabase_service.dart';
 import '../base_model.dart';
 
-class InsertUserModel extends BaseModel {
+class InsertCategoryModel extends BaseModel {
   final MoorDatabaseService _moorDatabaseService = locator<MoorDatabaseService>();
-
   ScrollController scrollController = ScrollController(); // set controller on scrolling
-
   TextEditingController nameController = TextEditingController();
-
-  bool show = true;
-  bool isCollapsed = false;
 
   void unFocusFromTheTextField(context) {
     FocusScope.of(context).requestFocus(FocusNode());
@@ -24,8 +19,9 @@ class InsertUserModel extends BaseModel {
     notifyListeners();
   }
 
-  Future addUser(context) async {
+  Future addCategory(context, transactionType) async {
     String name = nameController.text;
+    String type = transactionType;
 
     ToastContext().init(context);
 
@@ -34,12 +30,13 @@ class InsertUserModel extends BaseModel {
       return;
     }
 
-    UsersCompanion newUser = UsersCompanion(
-        name: Value(nameController.text),
-        );
+    CategoriesCompanion newCategory = CategoriesCompanion(
+      name: Value(nameController.text),
+      type: Value(type),
+    );
 
     // insert it!
-    await _moorDatabaseService.insertUser(newUser);
+    await _moorDatabaseService.insertCategory(newCategory);
 
     Toast.show("Добавлено удачно!", duration: Toast.lengthShort, gravity: Toast.bottom);
 
@@ -47,6 +44,6 @@ class InsertUserModel extends BaseModel {
     Navigator.of(context)
         .pushNamedAndRemoveUntil('home', (Route<dynamic> route) => false);
 
-    Navigator.of(context).pushNamed('users');
+    Navigator.of(context).pushNamed('categories');
   }
 }

@@ -18,12 +18,14 @@ class MyRouter {
     switch (settings.name) {
       case 'home':
         return MaterialPageRoute(builder: (context) => HomeView());
+
       case 'expense_book':
         return MaterialPageRoute(builder: (context) => ExpenseBook());
       case 'inserttransaction':
         return MaterialPageRoute(builder: (_) => InsertTransactionView());
       case 'choosecategory':
         return MaterialPageRoute(builder: (_) => ChooseCategoryView());
+
       case 'users':
         return MaterialPageRoute(builder: (_) => UsersView());
       case 'newuser':
@@ -31,12 +33,15 @@ class MyRouter {
       case 'edituser':
         var user = settings.arguments as User;
         return MaterialPageRoute(builder: (_) => EditUserView(user));
+
       case 'edittransaction':
         return MaterialPageRoute(builder: (_) => EditTransactionView());
+
       case 'categories':
         return MaterialPageRoute(builder: (_) => CategoriesView());
       case 'newcategory':
         return MaterialPageRoute(builder: (_) => InsertCategoryView());
+
       default:
         return MaterialPageRoute(
             builder: (context) => Scaffold(

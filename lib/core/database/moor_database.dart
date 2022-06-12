@@ -7,7 +7,14 @@ class Users extends Table {
   IntColumn get id => integer().autoIncrement()();
 }
 
-@UseMoor(tables: [Users])
+@DataClassName('Category')
+class Categories extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  TextColumn get name => text()();
+  TextColumn get type => text()();
+}
+
+@UseMoor(tables: [Users, Categories])
 class AppDatabase extends _$AppDatabase {
   AppDatabase()
   // Specify the location of the database file
@@ -34,4 +41,13 @@ class AppDatabase extends _$AppDatabase {
   Future updateUser(User user) => update(users).replace(user);
 
   Future deleteUser(User user) => delete(users).delete(user);
+
+  // Get all categories where type equals transactionType
+  Future getAllCategoriesByType(String transactionType) =>
+      (select(categories)..where((c) => c.type.equals(transactionType))).get();
+
+  Future deleteCategory(Category category) => delete(categories).delete(category);
+
+  Future insertCategory(CategoriesCompanion category) => into(categories).insert(category);
+
 }

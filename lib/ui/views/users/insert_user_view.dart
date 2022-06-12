@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:moneylover/core/viewmodels/user/insert_edit_model.dart';
+import 'package:moneylover/core/viewmodels/user/insert_user_model.dart';
 import 'package:moneylover/ui/shared/ui_helpers.dart';
 import '../base_view.dart';
 

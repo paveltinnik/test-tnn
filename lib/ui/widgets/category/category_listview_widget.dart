@@ -3,25 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
+import '../../../core/database/moor_database.dart';
 import '../../../core/viewmodels/category/category_model.dart';
-import '../../../core/viewmodels/expense_book/expense_book_model.dart';
-// import 'package:moneymanager/core/database/moor_database.dart';
-// import 'package:moneymanager/core/viewmodels/user_model.dart';
 
 class CategoriesListView extends StatefulWidget {
-  String transactionType = 'Приход';
+  final List<Category> categories;
+  final CategoryModel model;
 
-  CategoriesListView(this.transactionType, {Key? key}) : super(key: key);
-
-  final CategoryModel model = CategoryModel();
-  late List<Category> categories = [Category(), Category(), Category()];
+  const CategoriesListView(
+      this.categories,
+      this.model,
+      {Key? key}
+      ) : super(key: key);
 
   @override
   _CategoriesListViewState createState() => _CategoriesListViewState();
-}
-
-class Category {
-  String name = 'Зарплата';
 }
 
 class _CategoriesListViewState extends State<CategoriesListView> {
@@ -31,12 +27,12 @@ class _CategoriesListViewState extends State<CategoriesListView> {
     return Flexible(
         child: ListView(
           controller: widget.model.scrollController,
-          padding: EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
           children: widget.categories.map((category) {
             return Card(
                 child: Slidable(
                   // Specify a key if the Slidable is dismissible.
-                  key: const ValueKey(0),
+                  key: UniqueKey(),
 
                   // The start action pane is the one at the left or the top side.
                   startActionPane: ActionPane(
@@ -44,17 +40,23 @@ class _CategoriesListViewState extends State<CategoriesListView> {
                     motion: const ScrollMotion(),
 
                     // A pane can dismiss the Slidable.
-                    dismissible: DismissiblePane(onDismissed: () {}),
+                    dismissible: DismissiblePane(onDismissed: () {
+                      widget.model.deleteCategory(category);
+                      widget.categories.remove(category);
+                    }),
 
                     // All actions are defined in the children parameter.
-                    children: const [
+                    children: [
                       // A SlidableAction can have an icon and/or a label.
                       SlidableAction(
-                        onPressed: null,
+                        onPressed: (context) {
+                          widget.model.deleteCategory(category);
+                          widget.categories.remove(category);
+                        },
                         backgroundColor: Color(0xFFFE4A49),
                         foregroundColor: Colors.white,
                         icon: Icons.delete,
-                        label: 'Delete',
+                        label: 'Удалить',
                       ),
                     ],
                   ),
@@ -65,13 +67,12 @@ class _CategoriesListViewState extends State<CategoriesListView> {
                     children: [
                       SlidableAction(
                         onPressed: (context) {
-                          // TODO: изменить роутинг на editcategory
-                          Navigator.of(context).pushNamed('editcategory');
+                          Navigator.of(context).pushNamed('editcategory', arguments: category);
                         },
-                        backgroundColor: Color(0xFF0392CF),
+                        backgroundColor: const Color(0xFF0392CF),
                         foregroundColor: Colors.white,
                         icon: Icons.edit,
-                        label: 'Edit',
+                        label: 'Редактировать',
                       ),
                     ],
                   ),
@@ -80,7 +81,7 @@ class _CategoriesListViewState extends State<CategoriesListView> {
                   // component is not dragged.
                   // child: ListTile(title: Text(user.name)),
                   child: Container(
-                      padding: EdgeInsets.all(8),
+                      padding: const EdgeInsets.all(8),
                       child: Column(
                         children: <Widget>[
                           ListTile(
