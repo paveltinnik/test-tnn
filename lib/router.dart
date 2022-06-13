@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:moneylover/ui/views/category/categories_view.dart';
 import 'package:moneylover/ui/views/category/choose_category_view.dart';
+import 'package:moneylover/ui/views/category/edit_category_view.dart';
 import 'package:moneylover/ui/views/category/insert_category_view.dart';
 import 'package:moneylover/ui/views/expense_book/expense_book_view.dart';
 import 'package:moneylover/ui/views/home/home_view.dart';
@@ -41,6 +42,10 @@ class MyRouter {
         return MaterialPageRoute(builder: (_) => CategoriesView());
       case 'newcategory':
         return MaterialPageRoute(builder: (_) => InsertCategoryView());
+      case 'editcategory':
+        var category = settings.arguments as Category;
+        return MaterialPageRoute(builder: (_) => EditCategoryView(category));
+
 
       default:
         return MaterialPageRoute(

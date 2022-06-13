@@ -82,6 +82,10 @@ class MoorDatabaseService {
     return await _database.insertCategory(category);
   }
 
+  Future updateCategory(Category category) async {
+    return await _database.updateCategory(category);
+  }
+
   // getAllTransactionsForType(String month, String type) async {
   //   return await _database.transactionDao
   //       .getAllTransactionsForType(month, type)

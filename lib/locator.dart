@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:moneylover/core/viewmodels/category/category_model.dart';
+import 'package:moneylover/core/viewmodels/category/edit_category_model.dart';
 import 'package:moneylover/core/viewmodels/user/edit_user_model.dart';
 import 'package:moneylover/core/viewmodels/user/insert_user_model.dart';
 import 'package:moneylover/core/viewmodels/user/user_model.dart';
@@ -35,6 +36,7 @@ void setupLocator() {
 
   locator.registerFactory(() => CategoryModel());
   locator.registerFactory(() => InsertCategoryModel());
+  locator.registerFactory(() => EditCategoryModel());
 
 
 

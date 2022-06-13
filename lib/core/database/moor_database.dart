@@ -50,4 +50,5 @@ class AppDatabase extends _$AppDatabase {
 
   Future insertCategory(CategoriesCompanion category) => into(categories).insert(category);
 
+  Future updateCategory(Category category) => update(categories).replace(category);
 }
