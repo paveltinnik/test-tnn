@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:moneylover/ui/shared/ui_helpers.dart';
-import '../category/choose_category_view.dart';
+
+import '../category/categories_view.dart';
 
 class EditTransactionView extends StatefulWidget {
   const EditTransactionView({Key? key}) : super(key: key);
@@ -186,7 +187,7 @@ class _EditTransactionViewState extends State<EditTransactionView> {
     final result = await Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => ChooseCategoryView(),
+          builder: (context) => CategoriesView(false),
         ));
 
     // after the SecondScreen result comes back update the Text widget with it

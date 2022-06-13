@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:moneylover/ui/views/category/categories_view.dart';
-import 'package:moneylover/ui/views/category/choose_category_view.dart';
 import 'package:moneylover/ui/views/category/edit_category_view.dart';
 import 'package:moneylover/ui/views/category/insert_category_view.dart';
 import 'package:moneylover/ui/views/expense_book/expense_book_view.dart';
@@ -24,11 +23,12 @@ class MyRouter {
         return MaterialPageRoute(builder: (context) => ExpenseBook());
       case 'inserttransaction':
         return MaterialPageRoute(builder: (_) => InsertTransactionView());
-      case 'choosecategory':
-        return MaterialPageRoute(builder: (_) => ChooseCategoryView());
+      // case 'choosecategory':
+      //   return MaterialPageRoute(builder: (_) => Categor`());
 
       case 'users':
-        return MaterialPageRoute(builder: (_) => UsersView());
+        var isFromHomeView = settings.arguments as bool;
+        return MaterialPageRoute(builder: (_) => UsersView(isFromHomeView));
       case 'newuser':
         return MaterialPageRoute(builder: (_) => InsertUserView());
       case 'edituser':
@@ -39,7 +39,8 @@ class MyRouter {
         return MaterialPageRoute(builder: (_) => EditTransactionView());
 
       case 'categories':
-        return MaterialPageRoute(builder: (_) => CategoriesView());
+        var isFromHomeView = settings.arguments as bool;
+        return MaterialPageRoute(builder: (_) => CategoriesView(isFromHomeView));
       case 'newcategory':
         return MaterialPageRoute(builder: (_) => InsertCategoryView());
       case 'editcategory':

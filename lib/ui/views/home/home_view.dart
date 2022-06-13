@@ -54,18 +54,18 @@ class HomeView extends StatelessWidget {
               padding: const EdgeInsets.all(10),
               child: ElevatedButton.icon(
                 onPressed: () {
-                  Navigator.of(context).pushNamed('users');
+                  Navigator.of(context).pushNamed('users', arguments: true);
                   // simpleDialogWithOption(context);
                 },
-                icon: Icon(Icons.people_rounded),
-                label: Text('Пользователи'),
+                icon: const Icon(Icons.people_rounded),
+                label: const Text('Пользователи'),
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(10),
               child: ElevatedButton.icon(
                 onPressed: () {
-                  Navigator.of(context).pushNamed('categories');
+                  Navigator.of(context).pushNamed('categories', arguments: true);
                   // simpleDialogWithOption(context);
                 },
                 icon: Icon(Icons.category),

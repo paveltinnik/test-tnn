@@ -1,30 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:moneylover/ui/widgets/category/category_listview_widget.dart';
-import 'package:moneylover/ui/widgets/users/app_add_user.dart';
-import 'package:moneylover/ui/widgets/users/empty_user_widget.dart';
-import 'package:moneylover/ui/widgets/users/user_listview_widget.dart';
-import 'package:provider/provider.dart';
 
-import '../../../core/database/moor_database.dart';
 import '../../../core/viewmodels/category/category_model.dart';
 import '../../shared/ui_helpers.dart';
 import '../../widgets/category/app_add_category.dart';
+import '../../widgets/category/choose_category_listview_widget.dart';
 import '../base_view.dart';
 
 class CategoriesView extends StatefulWidget {
-  const CategoriesView({Key? key}) : super(key: key);
+  late bool isFromHomeView;
+
+  CategoriesView(this.isFromHomeView, {Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _CategoriesViewState();
+  _CategoriesViewState createState() => _CategoriesViewState();
 }
 
-class _CategoriesViewState extends State {
+class _CategoriesViewState extends State<CategoriesView> {
   String transactionType = 'Приход';
 
   @override
   Widget build(BuildContext context) {
-
     return BaseView<CategoryModel>(
         onModelReady: (model) async => await model.init(transactionType),
         builder: (context, model, child) => Scaffold(
@@ -56,7 +52,7 @@ class _CategoriesViewState extends State {
                   ],
                 ),
               ),
-              CategoriesListView(model.categories, model),
+              buildListView(model),
             ],
           ),
           floatingActionButton: const Visibility(
@@ -65,4 +61,14 @@ class _CategoriesViewState extends State {
         )
     );
   }
+
+  Widget buildListView(model) {
+    if (widget.isFromHomeView) {
+      return CategoriesListView(model.categories, model);
+    } else {
+      return ChooseCategoriesListView(model.categories, model);
+    }
+  }
 }
+
+

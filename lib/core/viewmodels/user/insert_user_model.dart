@@ -42,6 +42,6 @@ class InsertUserModel extends BaseModel {
     Navigator.of(context)
         .pushNamedAndRemoveUntil('home', (Route<dynamic> route) => false);
 
-    Navigator.of(context).pushNamed('users');
+    Navigator.of(context).pushNamed('users', arguments: true);
   }
 }

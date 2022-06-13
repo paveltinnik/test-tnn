@@ -46,6 +46,6 @@ class EditUserModel extends BaseModel {
         .pushNamedAndRemoveUntil('home', (Route<dynamic> route) => false);
 
     // return back to users
-    Navigator.of(context).pushNamed('users');
+    Navigator.of(context).pushNamed('users', arguments: true);
   }
 }

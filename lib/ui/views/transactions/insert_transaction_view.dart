@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:moneylover/ui/shared/ui_helpers.dart';
 import 'package:moneylover/ui/views/category/categories_view.dart';
 
-import '../../../core/viewmodels/insert_transaction_model.dart';
-import '../category/choose_category_view.dart';
+import '../users/users_view.dart';
 
 class InsertTransactionView extends StatefulWidget {
   const InsertTransactionView({Key? key}) : super(key: key);
@@ -46,44 +45,7 @@ class _InsertTransactionViewState extends State<InsertTransactionView> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Icon(Icons.request_quote_outlined),
-                  UIHelper.horizontalSpace(25),
-                  DropdownButton(
-                    value: model.getType(),
-                    items: const [
-                      DropdownMenuItem(child: Text('Приход'),value: 'Приход'),
-                      DropdownMenuItem(child: Text('Расход'),value: 'Расход'),
-                    ],
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        transactionType = newValue!;
-                        model.setType(newValue!);
-                      });
-                    },
-                  ),
-                ],
-              ),
-
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  UIHelper.horizontalSpace(50),
-                  RichText(
-                    text: TextSpan(
-                      text: "Тип транзакции",
-                      style: TextStyle(
-                          fontSize: 12, color: Colors.black.withOpacity(0.6)),
-                    ),
-                  )
-                ],
-              ),
-
-              UIHelper.verticalSpaceMedium(),
-
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Icon(Icons.category),
+                  const Icon(Icons.category),
                   UIHelper.horizontalSpaceMedium(),
                   TextButton(
                     style: TextButton.styleFrom(
@@ -91,7 +53,6 @@ class _InsertTransactionViewState extends State<InsertTransactionView> {
                     ),
                     onPressed: () {
                       _awaitReturnValueFromCategoryView(context);
-                      // Navigator.of(context).pushNamed('choosecategory');
                     },
                     child: Text(categoryText),
                   ),
@@ -115,16 +76,16 @@ class _InsertTransactionViewState extends State<InsertTransactionView> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Icon(Icons.people_rounded),
+                  const Icon(Icons.people_rounded),
                   UIHelper.horizontalSpaceMedium(),
                   TextButton(
                     style: TextButton.styleFrom(
                       textStyle: const TextStyle(fontSize: 20),
                     ),
                     onPressed: () {
-                      Navigator.of(context).pushNamed('users');
+                      _awaitReturnValueFromUsersView(context);
                     },
-                    child: const Text('Не выбран'),
+                    child: Text(userText),
                   ),
                 ],
               ),
@@ -143,14 +104,14 @@ class _InsertTransactionViewState extends State<InsertTransactionView> {
                 ],
               ),
               UIHelper.verticalSpaceMedium(),
-              Align(
+              const Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   'Выберите дату:',
                   style: TextStyle(fontStyle: FontStyle.italic, fontSize: 16),
                 ),
               ),
-              Divider(
+              const Divider(
                 thickness: 2,
               ),
               Container(
@@ -190,7 +151,7 @@ class _InsertTransactionViewState extends State<InsertTransactionView> {
     final result = await Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => ChooseCategoryView(),
+          builder: (context) => CategoriesView(false),
         ));
 
     // after the SecondScreen result comes back update the Text widget with it
@@ -199,6 +160,19 @@ class _InsertTransactionViewState extends State<InsertTransactionView> {
     });
   }
 
+  void _awaitReturnValueFromUsersView(BuildContext context) async {
+    // start the SecondScreen and wait for it to finish with a result
+    final result = await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => UsersView(false),
+        ));
+
+    // after the SecondScreen result comes back update the Text widget with it
+    setState(() {
+      userText = result;
+    });
+  }
 
   TextFormField buildTextField(TextEditingController controller, String text,
       String helperText, IconData icon, isNumeric) {
@@ -281,14 +255,6 @@ class InsertTransactionModel {
   void unFocusFromTheTextField(context) {
     FocusScope.of(context).requestFocus(new FocusNode());
   }
-
-  // void init(int selectedCategory, int index) {
-  //   // initla values are current day and month
-  //   selectedMonth = months[DateTime.now().month - 1];
-  //   selectedDay = DateTime.now().day.toString();
-  //   type = (selectedCategory == 1) ? 'income' : 'expense';
-  //   cateogryIndex = index;
-  // }
 
   String getSelectedDate() {
     if (int.parse(selectedDay) == DateTime.now().day &&

@@ -7,7 +7,7 @@ import '../base_model.dart';
 
 class CategoryModel extends BaseModel {
   final MoorDatabaseService _moorDatabaseService = locator<MoorDatabaseService>();
-  ScrollController scrollController = ScrollController(); // set controller on scrolling
+  ScrollController scrollController = ScrollController();
 
   List<Category> categories = <Category>[];
 

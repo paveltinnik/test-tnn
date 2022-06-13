@@ -76,14 +76,14 @@ class _UsersListViewState extends State<UsersListView> {
               // component is not dragged.
               // child: ListTile(title: Text(user.name)),
               child: Container(
-                padding: EdgeInsets.all(8),
+                padding: const EdgeInsets.all(8),
                 child: Column(
                   children: <Widget>[
                     ListTile(
                       leading: CircleAvatar(
                         radius: 25,
                         backgroundColor: Colors.blue.withOpacity(.1),
-                        child: Icon(Icons.man),
+                        child: const Icon(Icons.man),
                       ),
                       title: Text(user.name),
                     ),
