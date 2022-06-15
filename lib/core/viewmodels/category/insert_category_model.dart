@@ -44,6 +44,6 @@ class InsertCategoryModel extends BaseModel {
     Navigator.of(context)
         .pushNamedAndRemoveUntil('home', (Route<dynamic> route) => false);
 
-    Navigator.of(context).pushNamed('categories');
+    Navigator.of(context).pushNamed('categories', arguments: true);
   }
 }

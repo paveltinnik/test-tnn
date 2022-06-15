@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:moneylover/ui/views/category/categories_view.dart';
 import 'package:moneylover/ui/views/category/edit_category_view.dart';
 import 'package:moneylover/ui/views/category/insert_category_view.dart';
-import 'package:moneylover/ui/views/expense_book/expense_book_view.dart';
+import 'package:moneylover/ui/views/transactions/transactions_view.dart';
 import 'package:moneylover/ui/views/home/home_view.dart';
 import 'package:moneylover/ui/views/transactions/edit_transaction_view.dart';
 import 'package:moneylover/ui/views/transactions/insert_transaction_view.dart';

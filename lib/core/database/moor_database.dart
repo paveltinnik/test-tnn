@@ -14,7 +14,16 @@ class Categories extends Table {
   TextColumn get type => text()();
 }
 
-@UseMoor(tables: [Users, Categories])
+class Transactions extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  TextColumn get description => text()();
+  RealColumn get amount => real()();
+  IntColumn get category => integer().references(Categories, #id)();
+  IntColumn get user => integer().references(Users, #id)();
+  DateTimeColumn get date => dateTime()();
+}
+
+@UseMoor(tables: [Users, Categories, Transactions])
 class AppDatabase extends _$AppDatabase {
   AppDatabase()
   // Specify the location of the database file
@@ -37,12 +46,11 @@ class AppDatabase extends _$AppDatabase {
 
   Future insertUser(UsersCompanion user) => into(users).insert(user);
 
-  // Updates a User with a matching primary key
   Future updateUser(User user) => update(users).replace(user);
 
   Future deleteUser(User user) => delete(users).delete(user);
 
-  // Get all categories where type equals transactionType
+  // Categories
   Future getAllCategoriesByType(String transactionType) =>
       (select(categories)..where((c) => c.type.equals(transactionType))).get();
 
@@ -51,4 +59,13 @@ class AppDatabase extends _$AppDatabase {
   Future insertCategory(CategoriesCompanion category) => into(categories).insert(category);
 
   Future updateCategory(Category category) => update(categories).replace(category);
+
+  // Transactions
+  Future getAllTransactions() => select(transactions).get();
+
+  Future insertTransaction(TransactionsCompanion transaction) => into(transactions).insert(transaction);
+
+  Future updateTransaction(Transaction transaction) => update(transactions).replace(transaction);
+
+  Future deleteTransaction(Transaction transaction) => delete(transactions).delete(transaction);
 }

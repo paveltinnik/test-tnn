@@ -54,12 +54,9 @@ class MoorDatabaseService {
   //   return sumOfExpense;
   // }
 
+  // Users
   Future getAllUsers() async {
     return await _database.getAllUsers();
-  }
-
-  Future deleteUser(User user) async {
-    return await _database.deleteUser(user);
   }
 
   Future insertUser(UsersCompanion user) async {
@@ -70,12 +67,13 @@ class MoorDatabaseService {
     return await _database.updateUser(user);
   }
 
-  Future getAllCategoriesByType(String transactionType) async {
-    return await _database.getAllCategoriesByType(transactionType);
+  Future deleteUser(User user) async {
+    return await _database.deleteUser(user);
   }
 
-  Future deleteCategory(Category category) async {
-    return await _database.deleteCategory(category);
+  // Categories
+  Future getAllCategoriesByType(String transactionType) async {
+    return await _database.getAllCategoriesByType(transactionType);
   }
 
   Future insertCategory(CategoriesCompanion category) async {
@@ -85,6 +83,21 @@ class MoorDatabaseService {
   Future updateCategory(Category category) async {
     return await _database.updateCategory(category);
   }
+
+  Future deleteCategory(Category category) async {
+    return await _database.deleteCategory(category);
+  }
+
+  // Transactions
+  Future insertTransaction(TransactionsCompanion transaction) async {
+    return await _database.insertTransaction(transaction);
+  }
+
+  Future getAllTransactions() async {
+
+  }
+
+
 
   // getAllTransactionsForType(String month, String type) async {
   //   return await _database.transactionDao

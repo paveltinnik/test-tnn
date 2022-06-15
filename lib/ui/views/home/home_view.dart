@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:moneylover/router.dart';
-// import 'package:moneylover/ui/widgets/app_bar.dart';
-import 'package:moneylover/ui/widgets/home_view/option_view.dart';
 
 class HomeView extends StatelessWidget {
   @override

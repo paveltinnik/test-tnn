@@ -5,17 +5,14 @@ import '../../enums/viewstate.dart';
 import '../../services/moordatabase_service.dart';
 import '../base_model.dart';
 
-class CategoryModel extends BaseModel {
+class TransactionModel extends BaseModel {
   final MoorDatabaseService _moorDatabaseService = locator<MoorDatabaseService>();
   ScrollController scrollController = ScrollController();
 
-  List<Category> categories = <Category>[];
+  List<Transaction> transactions = <Transaction>[];
 
   init(transactionType) async {
-    categories = await _moorDatabaseService.getAllCategoriesByType(transactionType);
-
-    // show the list
-    setState();
+    transactions = await _moorDatabaseService.getAllTransactions();
     notifyListeners();
   }
 

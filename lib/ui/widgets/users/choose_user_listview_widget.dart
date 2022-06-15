@@ -37,7 +37,7 @@ class _ChooseUsersListViewState extends State<ChooseUsersListView> {
                           ),
                           title: Text(user.name),
                           onTap: () {
-                            Navigator.pop(context, user.name);
+                            Navigator.pop(context, user);
                           },
                         ),
                       ],

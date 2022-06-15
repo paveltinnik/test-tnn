@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:moneylover/ui/widgets/expense_book/summary_widget.dart';
+import 'package:moneylover/ui/widgets/transactions/summary_widget.dart';
 import 'package:moneylover/ui/widgets/transactions/transaction_listview_widget.dart';
 
-class ExpenseBook extends StatelessWidget {
+class TransactionsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

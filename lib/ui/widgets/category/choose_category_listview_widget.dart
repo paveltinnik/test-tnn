@@ -38,7 +38,7 @@ class _ChooseCategoriesListViewState extends State<ChooseCategoriesListView> {
                       ),
                       title: Text(category.name),
                       onTap: () {
-                        Navigator.pop(context, category.name);
+                        Navigator.pop(context, category);
                       },
                     ),
                   ],

@@ -4,7 +4,7 @@ import 'package:moneylover/core/viewmodels/category/edit_category_model.dart';
 import 'package:moneylover/core/viewmodels/user/edit_user_model.dart';
 import 'package:moneylover/core/viewmodels/user/insert_user_model.dart';
 import 'package:moneylover/core/viewmodels/user/user_model.dart';
-import 'package:moneylover/ui/views/category/insert_category_view.dart';
+
 // import 'package:moneymanager/core/services/notification_service.dart';
 // import 'package:moneymanager/core/services/sharedprefs_service.dart';
 // import 'package:moneymanager/core/viewmodels/details_model.dart';
@@ -19,7 +19,8 @@ import 'package:moneylover/ui/views/category/insert_category_view.dart';
 // import 'core/viewmodels/user_model.dart';
 import 'core/services/moordatabase_service.dart';
 import 'core/viewmodels/category/insert_category_model.dart';
-import 'core/viewmodels/insert_transaction_model.dart';
+import 'core/viewmodels/transaction/insert_transaction_model.dart';
+
 
 GetIt locator = GetIt.instance;
 
@@ -38,13 +39,13 @@ void setupLocator() {
   locator.registerFactory(() => InsertCategoryModel());
   locator.registerFactory(() => EditCategoryModel());
 
+  locator.registerFactory(() => InsertTransactionModel());
 
 
   // locator.registerSingleton<UserModel>(UserModel());
   // locator.registerFactory(() => DetailsModel());
   // locator.registerFactory(() => EditModel());
   // locator.registerFactory(() => NewTransactionModel());
-  locator.registerFactory(() => InsertTransactionModel());
   // locator.registerFactory(() => PieChartModel());
   // locator.registerFactory(() => ReminderModel());
 }

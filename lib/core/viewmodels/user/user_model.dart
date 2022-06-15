@@ -15,7 +15,7 @@ class UserModel extends BaseModel {
     users = await _moorDatabaseService.getAllUsers();
 
     // show the list
-    setState(ViewState.Idle);
+    setState();
     notifyListeners();
   }
 
