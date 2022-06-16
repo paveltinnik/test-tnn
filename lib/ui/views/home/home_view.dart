@@ -29,7 +29,7 @@ class HomeView extends StatelessWidget {
               padding: const EdgeInsets.all(10),
               child: ElevatedButton.icon(
                 onPressed: () {
-                  Navigator.of(context).pushNamed('expense_book');
+                  Navigator.of(context).pushNamed('transactions');
                   // simpleDialogWithOption(context);
                 },
                 icon: Icon(Icons.wallet),

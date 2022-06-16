@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 
 import '../../../core/database/moor_database.dart';
 import '../../../core/viewmodels/category/edit_category_model.dart';
-import '../../../core/viewmodels/insert_transaction_model.dart';
 import '../base_view.dart';
 
 class EditCategoryView extends StatelessWidget {

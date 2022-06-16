@@ -102,6 +102,25 @@ class InsertTransactionModel extends BaseModel {
     notifyListeners();
   }
 
+  String getSelectedDate() {
+    return '${date.day.toString().padLeft(2,'0')}'
+        '.${date.month.toString().padLeft(2,'0')}'
+        '.${date.year.toString()}';
+  }
+
+  Future selectDate(context) async {
+    // hide the keyboard
+    unFocusFromTheTextField(context);
+
+    date = (await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2020),
+        lastDate: DateTime.now()))!;
+
+    notifyListeners();
+  }
+
   TextFormField buildTextField(TextEditingController controller, String text,
       String helperText, IconData icon, isNumeric) {
     return TextFormField(
@@ -131,24 +150,5 @@ class InsertTransactionModel extends BaseModel {
         helperText: helperText,
       ),
     );
-  }
-
-  String getSelectedDate() {
-    return '${date.day.toString().padLeft(2,'0')}'
-        '.${date.month.toString().padLeft(2,'0')}'
-        '.${date.year.toString()}';
-  }
-
-  Future selectDate(context) async {
-    // hide the keyboard
-    unFocusFromTheTextField(context);
-
-    date = (await showDatePicker(
-        context: context,
-        initialDate: DateTime.now(),
-        firstDate: DateTime(2020),
-        lastDate: DateTime.now()))!;
-
-    notifyListeners();
   }
 }

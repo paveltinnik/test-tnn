@@ -19,12 +19,13 @@ class MyRouter {
       case 'home':
         return MaterialPageRoute(builder: (context) => HomeView());
 
-      case 'expense_book':
-        return MaterialPageRoute(builder: (context) => ExpenseBook());
+      case 'transactions':
+        return MaterialPageRoute(builder: (context) => TransactionsView());
       case 'inserttransaction':
         return MaterialPageRoute(builder: (_) => InsertTransactionView());
-      // case 'choosecategory':
-      //   return MaterialPageRoute(builder: (_) => Categor`());
+      case 'edittransaction':
+        var data = settings.arguments as TransactionWithCategoryAndUser;
+        return MaterialPageRoute(builder: (_) => EditTransactionView(data));
 
       case 'users':
         var isFromHomeView = settings.arguments as bool;
@@ -34,9 +35,6 @@ class MyRouter {
       case 'edituser':
         var user = settings.arguments as User;
         return MaterialPageRoute(builder: (_) => EditUserView(user));
-
-      case 'edittransaction':
-        return MaterialPageRoute(builder: (_) => EditTransactionView());
 
       case 'categories':
         var isFromHomeView = settings.arguments as bool;

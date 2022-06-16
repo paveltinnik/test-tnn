@@ -94,7 +94,7 @@ class MoorDatabaseService {
   }
 
   Future getAllTransactions() async {
-
+    return await _database.getAllTransactions();
   }
 
 

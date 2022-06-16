@@ -9,10 +9,13 @@ class TransactionModel extends BaseModel {
   final MoorDatabaseService _moorDatabaseService = locator<MoorDatabaseService>();
   ScrollController scrollController = ScrollController();
 
-  List<Transaction> transactions = <Transaction>[];
+  // List<Transaction> transactions = <Transaction>[];
+  List<TransactionWithCategoryAndUser> transactionsData = <TransactionWithCategoryAndUser>[];
 
-  init(transactionType) async {
-    transactions = await _moorDatabaseService.getAllTransactions();
+  late String date;
+
+  init() async {
+    transactionsData = await _moorDatabaseService.getAllTransactions();
     notifyListeners();
   }
 

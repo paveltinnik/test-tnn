@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:moneylover/core/database/moor_database.dart';
 import 'package:moneylover/ui/shared/ui_helpers.dart';
 
 import '../category/categories_view.dart';
 
 class EditTransactionView extends StatefulWidget {
-  const EditTransactionView({Key? key}) : super(key: key);
+  TransactionWithCategoryAndUser transactionData;
+
+  EditTransactionView(this.transactionData, {Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _EditTransactionViewState();
@@ -12,12 +15,11 @@ class EditTransactionView extends StatefulWidget {
 
 class _EditTransactionViewState extends State<EditTransactionView> {
   var model = InsertTransactionModel(
-    InsertTransactionModel.months[DateTime.now().month - 1],
-    DateTime.now().day.toString()
-    // (selectedCategory == 1) ? 'income' : 'expense',
-    // category.index
-  );
-
+      InsertTransactionModel.months[DateTime.now().month - 1],
+      DateTime.now().day.toString()
+      // (selectedCategory == 1) ? 'income' : 'expense',
+      // category.index
+      );
 
   String categoryText = 'Не выбрана';
   String userText = 'Не выбран';
@@ -38,9 +40,7 @@ class _EditTransactionViewState extends State<EditTransactionView> {
               UIHelper.verticalSpaceMedium(),
               buildTextField(model.amountController, 'Сумма:',
                   "Введите сумму для транзакции", Icons.attach_money, true),
-
               UIHelper.verticalSpaceMedium(),
-
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -49,8 +49,8 @@ class _EditTransactionViewState extends State<EditTransactionView> {
                   DropdownButton(
                     value: model.getType(),
                     items: [
-                      DropdownMenuItem(child: Text('Приход'),value: 'Приход'),
-                      DropdownMenuItem(child: Text('Расход'),value: 'Расход'),
+                      DropdownMenuItem(child: Text('Приход'), value: 'Приход'),
+                      DropdownMenuItem(child: Text('Расход'), value: 'Расход'),
                     ],
                     onChanged: (String? newValue) {
                       setState(() {
@@ -74,9 +74,7 @@ class _EditTransactionViewState extends State<EditTransactionView> {
                   // Text('Категория'),
                 ],
               ),
-
               UIHelper.verticalSpaceMedium(),
-
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -195,7 +193,6 @@ class _EditTransactionViewState extends State<EditTransactionView> {
       categoryText = result;
     });
   }
-
 
   TextFormField buildTextField(TextEditingController controller, String text,
       String helperText, IconData icon, isNumeric) {

@@ -38,5 +38,4 @@ class UsersView extends StatelessWidget {
       return ChooseUsersListView(model.users, model);
     }
   }
-
 }

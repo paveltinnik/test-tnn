@@ -2,12 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:intl/intl.dart';
 
 import '../../../core/database/moor_database.dart';
 import '../../../core/viewmodels/transaction/transaction_model.dart';
 
 class TransactionsListView extends StatefulWidget {
-  late List<Transaction> transactions;
+  late List<TransactionWithCategoryAndUser> transactions;
   late TransactionModel model;
 
   TransactionsListView(
@@ -20,13 +21,15 @@ class TransactionsListView extends StatefulWidget {
 }
 
 class _TransactionsListViewState extends State<TransactionsListView> {
+  final DateFormat formatter = DateFormat('dd.MM.yyyy');
+
   @override
   Widget build(BuildContext context) {
     return Flexible(
         child: ListView(
           controller: widget.model.scrollController,
-          padding: EdgeInsets.all(8),
-          children: widget.transactions.map((transaction) {
+          padding: const EdgeInsets.all(8),
+          children: widget.transactions.map((data) {
             return Card(
                 child: Slidable(
                   // Specify a key if the Slidable is dismissible.
@@ -48,23 +51,23 @@ class _TransactionsListViewState extends State<TransactionsListView> {
                         backgroundColor: Color(0xFFFE4A49),
                         foregroundColor: Colors.white,
                         icon: Icons.delete,
-                        label: 'Delete',
+                        label: 'Удалить',
                       ),
                     ],
                   ),
 
                   // The end action pane is the one at the right or the bottom side.
                   endActionPane: ActionPane(
-                    motion: ScrollMotion(),
+                    motion: const ScrollMotion(),
                     children: [
                       SlidableAction(
                         onPressed: (context) {
-                          Navigator.of(context).pushNamed('edittransaction');
+                          Navigator.of(context).pushNamed('edittransaction', arguments: data);
                         },
                         backgroundColor: Color(0xFF0392CF),
                         foregroundColor: Colors.white,
                         icon: Icons.edit,
-                        label: 'Edit',
+                        label: 'Редактировать',
                       ),
                     ],
                   ),
@@ -79,13 +82,14 @@ class _TransactionsListViewState extends State<TransactionsListView> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
-                              Text(
-                                transaction.day + ', ' + transaction.month,
-                                style: TextStyle(fontWeight: FontWeight.w300),
+                              // TODO Изменить дату с помощью formatter
+                              Text('${data.transaction.date.day.toString().padLeft(2,'0')}'
+                                  '.${data.transaction.date.month.toString().padLeft(2,'0')}'
+                                  '.${data.transaction.date.year.toString()}',
+                                style: const TextStyle(fontWeight: FontWeight.w300),
                               ),
                               Text(
-                                transaction.category.type + ": " +
-                                    transaction.amount.toString(),
+                                "${data.category.type}: ${data.transaction.amount}",
                                 style: const TextStyle(fontWeight: FontWeight.w300),
                               )
                             ],
@@ -99,12 +103,12 @@ class _TransactionsListViewState extends State<TransactionsListView> {
                               backgroundColor: Colors.blue.withOpacity(.1),
                               child: const Icon(Icons.description),
                             ),
-                            title: Text(transaction.description),
-                            trailing: transaction.category.type.toLowerCase() == 'расход'
-                                ? Text('- ' + transaction.amount.toString(),
-                                style: TextStyle(fontSize: 20))
-                                : Text(transaction.amount.toString(),
-                                style: TextStyle(fontSize: 20)),
+                            title: Text(data.transaction.description),
+                            trailing: data.category.type.toLowerCase() == 'расход'
+                                ? Text('- ${data.transaction.amount}',
+                                style: const TextStyle(fontSize: 20))
+                                : Text(data.transaction.amount.toString(),
+                                style: const TextStyle(fontSize: 20)),
                           ),
                           ListTile(
                             leading: CircleAvatar(
@@ -112,7 +116,7 @@ class _TransactionsListViewState extends State<TransactionsListView> {
                               backgroundColor: Colors.blue.withOpacity(.1),
                               child: Icon(Icons.man),
                             ),
-                            title: Text(transaction.user.toString()),
+                            title: Text(data.user.name.toString()),
                           ),
                         ],
                       )
