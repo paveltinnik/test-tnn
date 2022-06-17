@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:moneylover/core/viewmodels/transaction/insert_transaction_model.dart';
+import 'package:moneylover/core/viewmodels/transaction/transaction_model.dart';
 import 'package:moneylover/ui/shared/ui_helpers.dart';
 
 import '../base_view.dart';
@@ -15,8 +15,8 @@ class _InsertTransactionViewState extends State<InsertTransactionView> {
   @override
   Widget build(BuildContext context) {
 
-    return BaseView<InsertTransactionModel>(
-        onModelReady: (model) async => await model.init(),
+    return BaseView<TransactionModel>(
+        onModelReady: (model) async => await model.init(null),
         builder: (context, model, child) => Scaffold(
           appBar: AppBar(
             title: const Text('Добавить транзакцию'),
@@ -26,11 +26,9 @@ class _InsertTransactionViewState extends State<InsertTransactionView> {
               padding: const EdgeInsets.all(16.0),
               child: ListView(
                 children: <Widget>[
-                  model.buildTextField(model.descriptionController, 'Описание:',
-                      "Введите описание транзакции", Icons.edit, false),
+                  model.getDescriptionTextField(),
                   UIHelper.verticalSpaceMedium(),
-                  model.buildTextField(model.amountController, 'Сумма:',
-                      "Введите сумму для транзакции", Icons.attach_money, true),
+                  model.getAmountTextField(),
                   UIHelper.verticalSpaceMedium(),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,

@@ -8,11 +8,11 @@ import '../../../core/database/moor_database.dart';
 import '../../../core/viewmodels/transaction/transaction_model.dart';
 
 class TransactionsListView extends StatefulWidget {
-  late List<TransactionWithCategoryAndUser> transactions;
+  late List<TransactionWithCategoryAndUser> listOfTransactionsData;
   late TransactionModel model;
 
   TransactionsListView(
-      this.transactions,
+      this.listOfTransactionsData,
       this.model,
       {Key? key}) : super(key: key);
 
@@ -20,8 +20,8 @@ class TransactionsListView extends StatefulWidget {
   _TransactionsListViewState createState() => _TransactionsListViewState();
 }
 
-class _TransactionsListViewState extends State<TransactionsListView> {
   final DateFormat formatter = DateFormat('dd.MM.yyyy');
+  class _TransactionsListViewState extends State<TransactionsListView> {
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class _TransactionsListViewState extends State<TransactionsListView> {
         child: ListView(
           controller: widget.model.scrollController,
           padding: const EdgeInsets.all(8),
-          children: widget.transactions.map((data) {
+          children: widget.listOfTransactionsData.map((data) {
             return Card(
                 child: Slidable(
                   // Specify a key if the Slidable is dismissible.
@@ -41,14 +41,20 @@ class _TransactionsListViewState extends State<TransactionsListView> {
                     motion: const ScrollMotion(),
 
                     // A pane can dismiss the Slidable.
-                    dismissible: DismissiblePane(onDismissed: () {}),
+                    dismissible: DismissiblePane(onDismissed: () {
+                      widget.model.deleteTransaction(data.transaction);
+                      widget.listOfTransactionsData.remove(data);
+                    }),
 
                     // All actions are defined in the children parameter.
-                    children: const [
+                    children: [
                       // A SlidableAction can have an icon and/or a label.
                       SlidableAction(
-                        onPressed: null,
-                        backgroundColor: Color(0xFFFE4A49),
+                        onPressed: (context) {
+                          widget.model.deleteTransaction(data.transaction);
+                          widget.listOfTransactionsData.remove(data);
+                        },
+                        backgroundColor: const Color(0xFFFE4A49),
                         foregroundColor: Colors.white,
                         icon: Icons.delete,
                         label: 'Удалить',
@@ -114,9 +120,17 @@ class _TransactionsListViewState extends State<TransactionsListView> {
                             leading: CircleAvatar(
                               radius: 25,
                               backgroundColor: Colors.blue.withOpacity(.1),
-                              child: Icon(Icons.man),
+                              child:const Icon(Icons.category),
                             ),
-                            title: Text(data.user.name.toString()),
+                            title: Text(data.category.name),
+                          ),
+                          ListTile(
+                            leading: CircleAvatar(
+                              radius: 25,
+                              backgroundColor: Colors.blue.withOpacity(.1),
+                              child: const Icon(Icons.man),
+                            ),
+                            title: Text(data.user.name),
                           ),
                         ],
                       )

@@ -97,6 +97,13 @@ class MoorDatabaseService {
     return await _database.getAllTransactions();
   }
 
+  Future updateTransaction(Transaction transaction) async {
+    return await _database.updateTransaction(transaction);
+  }
+
+  Future deleteTransaction(Transaction transaction) async {
+    return await _database.deleteTransaction(transaction);
+  }
 
 
   // getAllTransactionsForType(String month, String type) async {

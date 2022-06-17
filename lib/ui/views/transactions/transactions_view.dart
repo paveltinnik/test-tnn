@@ -11,7 +11,7 @@ class TransactionsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseView<TransactionModel>(
-        onModelReady: (model) async => await model.init(),
+        onModelReady: (model) async => await model.init(null),
         builder: (context, model, child) => Scaffold(
           appBar: AppBar(
             title: const Text('Книга учета'),
@@ -21,7 +21,7 @@ class TransactionsView extends StatelessWidget {
               // Виджет с дооходами, расходами, балансом
               SummaryWidget(income: 0, expense: 0),
               // Виджет с листом из транзакций
-              TransactionsListView(model.transactionsData, model),
+              TransactionsListView(model.listOfTransactionsData, model),
             ],
           ),
         )

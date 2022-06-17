@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:moneylover/core/viewmodels/category/insert_category_model.dart';
 import 'package:moneylover/ui/shared/ui_helpers.dart';
-import 'package:moneylover/ui/views/category/categories_view.dart';
-import 'package:provider/provider.dart';
 
 import '../../../core/database/moor_database.dart';
 import '../../../core/viewmodels/category/edit_category_model.dart';
