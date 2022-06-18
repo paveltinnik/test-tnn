@@ -56,60 +56,58 @@ class MoorDatabaseService {
 
   // Users
   Future getAllUsers() async {
-    return await _database.getAllUsers();
+    return await _database.userDao.getAllUsers();
   }
 
   Future insertUser(UsersCompanion user) async {
-    return await _database.insertUser(user);
+    return await _database.userDao.insertUser(user);
   }
 
   Future updateUser(User user) async {
-    return await _database.updateUser(user);
+    return await _database.userDao.updateUser(user);
   }
 
   Future deleteUser(User user) async {
-    return await _database.deleteUser(user);
+    return await _database.userDao.deleteUser(user);
   }
 
   // Categories
   Future getAllCategoriesByType(String transactionType) async {
-    return await _database.getAllCategoriesByType(transactionType);
+    return await _database.categoryDao.getAllCategoriesByType(transactionType);
   }
 
   Future insertCategory(CategoriesCompanion category) async {
-    return await _database.insertCategory(category);
+    return await _database.categoryDao.insertCategory(category);
   }
 
   Future updateCategory(Category category) async {
-    return await _database.updateCategory(category);
+    return await _database.categoryDao.updateCategory(category);
   }
 
   Future deleteCategory(Category category) async {
-    return await _database.deleteCategory(category);
+    return await _database.categoryDao.deleteCategory(category);
   }
 
   // Transactions
   Future insertTransaction(TransactionsCompanion transaction) async {
-    return await _database.insertTransaction(transaction);
+    return await _database.transactionDao.insertTransaction(transaction);
   }
 
   Future getAllTransactions() async {
-    return await _database.getAllTransactions();
+    return await _database.transactionDao.getAllTransactions();
   }
 
   Future updateTransaction(Transaction transaction) async {
-    return await _database.updateTransaction(transaction);
+    return await _database.transactionDao.updateTransaction(transaction);
   }
 
   Future deleteTransaction(Transaction transaction) async {
-    return await _database.deleteTransaction(transaction);
+    return await _database.transactionDao.deleteTransaction(transaction);
   }
 
-
-  // getAllTransactionsForType(String month, String type) async {
-  //   return await _database.transactionDao
-  //       .getAllTransactionsForType(month, type)
-  //       .get();
+  // getTotalIncome() {
+  //   // return _database.transactionDao.getTotalIncome('Приход').get();
+  //   return _database.transactionDao.get;
   // }
 
 }

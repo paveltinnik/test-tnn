@@ -22,12 +22,12 @@ class SummaryWidget extends StatelessWidget {
             children: <Widget>[
               Column(
                 children: <Widget>[
-                  Text('Доходы', style: summaryTextStyle),
+                  const Text('Доходы', style: summaryTextStyle),
                   UIHelper.verticalSpaceSmall(),
                   Text(income.toString(), style: summaryNumberTextStyle)
                 ],
               ),
-              Text(
+              const Text(
                 '|',
                 style: TextStyle(
                     fontSize: 40,
@@ -44,7 +44,7 @@ class SummaryWidget extends StatelessWidget {
                   Text(expense.toString(), style: summaryNumberTextStyle)
                 ],
               ),
-              Text(
+              const Text(
                 '|',
                 style: TextStyle(
                     fontSize: 40,
@@ -53,7 +53,7 @@ class SummaryWidget extends StatelessWidget {
               ),
               Column(
                 children: <Widget>[
-                  Text(
+                  const Text(
                     'Баланс',
                     style: summaryTextStyle,
                   ),

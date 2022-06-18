@@ -7,177 +7,6 @@ part of 'moor_database.dart';
 // **************************************************************************
 
 // ignore_for_file: type=lint
-class User extends DataClass implements Insertable<User> {
-  final String name;
-  final int id;
-  User({required this.name, required this.id});
-  factory User.fromData(Map<String, dynamic> data, GeneratedDatabase db,
-      {String? prefix}) {
-    final effectivePrefix = prefix ?? '';
-    return User(
-      name: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}name'])!,
-      id: const IntType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
-    );
-  }
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['name'] = Variable<String>(name);
-    map['id'] = Variable<int>(id);
-    return map;
-  }
-
-  UsersCompanion toCompanion(bool nullToAbsent) {
-    return UsersCompanion(
-      name: Value(name),
-      id: Value(id),
-    );
-  }
-
-  factory User.fromJson(Map<String, dynamic> json,
-      {ValueSerializer? serializer}) {
-    serializer ??= moorRuntimeOptions.defaultSerializer;
-    return User(
-      name: serializer.fromJson<String>(json['name']),
-      id: serializer.fromJson<int>(json['id']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= moorRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'name': serializer.toJson<String>(name),
-      'id': serializer.toJson<int>(id),
-    };
-  }
-
-  User copyWith({String? name, int? id}) => User(
-        name: name ?? this.name,
-        id: id ?? this.id,
-      );
-  @override
-  String toString() {
-    return (StringBuffer('User(')
-          ..write('name: $name, ')
-          ..write('id: $id')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(name, id);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is User && other.name == this.name && other.id == this.id);
-}
-
-class UsersCompanion extends UpdateCompanion<User> {
-  final Value<String> name;
-  final Value<int> id;
-  const UsersCompanion({
-    this.name = const Value.absent(),
-    this.id = const Value.absent(),
-  });
-  UsersCompanion.insert({
-    required String name,
-    this.id = const Value.absent(),
-  }) : name = Value(name);
-  static Insertable<User> custom({
-    Expression<String>? name,
-    Expression<int>? id,
-  }) {
-    return RawValuesInsertable({
-      if (name != null) 'name': name,
-      if (id != null) 'id': id,
-    });
-  }
-
-  UsersCompanion copyWith({Value<String>? name, Value<int>? id}) {
-    return UsersCompanion(
-      name: name ?? this.name,
-      id: id ?? this.id,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (name.present) {
-      map['name'] = Variable<String>(name.value);
-    }
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('UsersCompanion(')
-          ..write('name: $name, ')
-          ..write('id: $id')
-          ..write(')'))
-        .toString();
-  }
-}
-
-class $UsersTable extends Users with TableInfo<$UsersTable, User> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $UsersTable(this.attachedDatabase, [this._alias]);
-  final VerificationMeta _nameMeta = const VerificationMeta('name');
-  @override
-  late final GeneratedColumn<String?> name = GeneratedColumn<String?>(
-      'name', aliasedName, false,
-      type: const StringType(), requiredDuringInsert: true);
-  final VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
-      'id', aliasedName, false,
-      type: const IntType(),
-      requiredDuringInsert: false,
-      defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
-  @override
-  List<GeneratedColumn> get $columns => [name, id];
-  @override
-  String get aliasedName => _alias ?? 'users';
-  @override
-  String get actualTableName => 'users';
-  @override
-  VerificationContext validateIntegrity(Insertable<User> instance,
-      {bool isInserting = false}) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('name')) {
-      context.handle(
-          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
-    } else if (isInserting) {
-      context.missing(_nameMeta);
-    }
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  User map(Map<String, dynamic> data, {String? tablePrefix}) {
-    return User.fromData(data, attachedDatabase,
-        prefix: tablePrefix != null ? '$tablePrefix.' : null);
-  }
-
-  @override
-  $UsersTable createAlias(String alias) {
-    return $UsersTable(attachedDatabase, alias);
-  }
-}
-
 class Category extends DataClass implements Insertable<Category> {
   final int id;
   final String name;
@@ -336,7 +165,10 @@ class $CategoriesTable extends Categories
   @override
   late final GeneratedColumn<String?> name = GeneratedColumn<String?>(
       'name', aliasedName, false,
-      type: const StringType(), requiredDuringInsert: true);
+      additionalChecks:
+          GeneratedColumn.checkTextLength(minTextLength: 3, maxTextLength: 20),
+      type: const StringType(),
+      requiredDuringInsert: true);
   final VerificationMeta _typeMeta = const VerificationMeta('type');
   @override
   late final GeneratedColumn<String?> type = GeneratedColumn<String?>(
@@ -385,19 +217,193 @@ class $CategoriesTable extends Categories
   }
 }
 
+class User extends DataClass implements Insertable<User> {
+  final int id;
+  final String name;
+  User({required this.id, required this.name});
+  factory User.fromData(Map<String, dynamic> data, GeneratedDatabase db,
+      {String? prefix}) {
+    final effectivePrefix = prefix ?? '';
+    return User(
+      id: const IntType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
+      name: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}name'])!,
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['name'] = Variable<String>(name);
+    return map;
+  }
+
+  UsersCompanion toCompanion(bool nullToAbsent) {
+    return UsersCompanion(
+      id: Value(id),
+      name: Value(name),
+    );
+  }
+
+  factory User.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return User(
+      id: serializer.fromJson<int>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'name': serializer.toJson<String>(name),
+    };
+  }
+
+  User copyWith({int? id, String? name}) => User(
+        id: id ?? this.id,
+        name: name ?? this.name,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('User(')
+          ..write('id: $id, ')
+          ..write('name: $name')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, name);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is User && other.id == this.id && other.name == this.name);
+}
+
+class UsersCompanion extends UpdateCompanion<User> {
+  final Value<int> id;
+  final Value<String> name;
+  const UsersCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+  });
+  UsersCompanion.insert({
+    this.id = const Value.absent(),
+    required String name,
+  }) : name = Value(name);
+  static Insertable<User> custom({
+    Expression<int>? id,
+    Expression<String>? name,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+    });
+  }
+
+  UsersCompanion copyWith({Value<int>? id, Value<String>? name}) {
+    return UsersCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('UsersCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $UsersTable extends Users with TableInfo<$UsersTable, User> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $UsersTable(this.attachedDatabase, [this._alias]);
+  final VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
+      'id', aliasedName, false,
+      type: const IntType(),
+      requiredDuringInsert: false,
+      defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
+  final VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String?> name = GeneratedColumn<String?>(
+      'name', aliasedName, false,
+      additionalChecks:
+          GeneratedColumn.checkTextLength(minTextLength: 1, maxTextLength: 20),
+      type: const StringType(),
+      requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [id, name];
+  @override
+  String get aliasedName => _alias ?? 'users';
+  @override
+  String get actualTableName => 'users';
+  @override
+  VerificationContext validateIntegrity(Insertable<User> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  User map(Map<String, dynamic> data, {String? tablePrefix}) {
+    return User.fromData(data, attachedDatabase,
+        prefix: tablePrefix != null ? '$tablePrefix.' : null);
+  }
+
+  @override
+  $UsersTable createAlias(String alias) {
+    return $UsersTable(attachedDatabase, alias);
+  }
+}
+
 class Transaction extends DataClass implements Insertable<Transaction> {
   final int id;
   final String description;
   final double amount;
-  final int category;
-  final int user;
+  final int? category;
+  final int? user;
   final DateTime date;
   Transaction(
       {required this.id,
       required this.description,
       required this.amount,
-      required this.category,
-      required this.user,
+      this.category,
+      this.user,
       required this.date});
   factory Transaction.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String? prefix}) {
@@ -410,9 +416,9 @@ class Transaction extends DataClass implements Insertable<Transaction> {
       amount: const RealType()
           .mapFromDatabaseResponse(data['${effectivePrefix}amount'])!,
       category: const IntType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}category'])!,
+          .mapFromDatabaseResponse(data['${effectivePrefix}category']),
       user: const IntType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}user'])!,
+          .mapFromDatabaseResponse(data['${effectivePrefix}user']),
       date: const DateTimeType()
           .mapFromDatabaseResponse(data['${effectivePrefix}date'])!,
     );
@@ -423,8 +429,12 @@ class Transaction extends DataClass implements Insertable<Transaction> {
     map['id'] = Variable<int>(id);
     map['description'] = Variable<String>(description);
     map['amount'] = Variable<double>(amount);
-    map['category'] = Variable<int>(category);
-    map['user'] = Variable<int>(user);
+    if (!nullToAbsent || category != null) {
+      map['category'] = Variable<int?>(category);
+    }
+    if (!nullToAbsent || user != null) {
+      map['user'] = Variable<int?>(user);
+    }
     map['date'] = Variable<DateTime>(date);
     return map;
   }
@@ -434,8 +444,10 @@ class Transaction extends DataClass implements Insertable<Transaction> {
       id: Value(id),
       description: Value(description),
       amount: Value(amount),
-      category: Value(category),
-      user: Value(user),
+      category: category == null && nullToAbsent
+          ? const Value.absent()
+          : Value(category),
+      user: user == null && nullToAbsent ? const Value.absent() : Value(user),
       date: Value(date),
     );
   }
@@ -447,8 +459,8 @@ class Transaction extends DataClass implements Insertable<Transaction> {
       id: serializer.fromJson<int>(json['id']),
       description: serializer.fromJson<String>(json['description']),
       amount: serializer.fromJson<double>(json['amount']),
-      category: serializer.fromJson<int>(json['category']),
-      user: serializer.fromJson<int>(json['user']),
+      category: serializer.fromJson<int?>(json['category']),
+      user: serializer.fromJson<int?>(json['user']),
       date: serializer.fromJson<DateTime>(json['date']),
     );
   }
@@ -459,8 +471,8 @@ class Transaction extends DataClass implements Insertable<Transaction> {
       'id': serializer.toJson<int>(id),
       'description': serializer.toJson<String>(description),
       'amount': serializer.toJson<double>(amount),
-      'category': serializer.toJson<int>(category),
-      'user': serializer.toJson<int>(user),
+      'category': serializer.toJson<int?>(category),
+      'user': serializer.toJson<int?>(user),
       'date': serializer.toJson<DateTime>(date),
     };
   }
@@ -512,8 +524,8 @@ class TransactionsCompanion extends UpdateCompanion<Transaction> {
   final Value<int> id;
   final Value<String> description;
   final Value<double> amount;
-  final Value<int> category;
-  final Value<int> user;
+  final Value<int?> category;
+  final Value<int?> user;
   final Value<DateTime> date;
   const TransactionsCompanion({
     this.id = const Value.absent(),
@@ -527,20 +539,18 @@ class TransactionsCompanion extends UpdateCompanion<Transaction> {
     this.id = const Value.absent(),
     required String description,
     required double amount,
-    required int category,
-    required int user,
+    this.category = const Value.absent(),
+    this.user = const Value.absent(),
     required DateTime date,
   })  : description = Value(description),
         amount = Value(amount),
-        category = Value(category),
-        user = Value(user),
         date = Value(date);
   static Insertable<Transaction> custom({
     Expression<int>? id,
     Expression<String>? description,
     Expression<double>? amount,
-    Expression<int>? category,
-    Expression<int>? user,
+    Expression<int?>? category,
+    Expression<int?>? user,
     Expression<DateTime>? date,
   }) {
     return RawValuesInsertable({
@@ -557,8 +567,8 @@ class TransactionsCompanion extends UpdateCompanion<Transaction> {
       {Value<int>? id,
       Value<String>? description,
       Value<double>? amount,
-      Value<int>? category,
-      Value<int>? user,
+      Value<int?>? category,
+      Value<int?>? user,
       Value<DateTime>? date}) {
     return TransactionsCompanion(
       id: id ?? this.id,
@@ -583,10 +593,10 @@ class TransactionsCompanion extends UpdateCompanion<Transaction> {
       map['amount'] = Variable<double>(amount.value);
     }
     if (category.present) {
-      map['category'] = Variable<int>(category.value);
+      map['category'] = Variable<int?>(category.value);
     }
     if (user.present) {
-      map['user'] = Variable<int>(user.value);
+      map['user'] = Variable<int?>(user.value);
     }
     if (date.present) {
       map['date'] = Variable<DateTime>(date.value);
@@ -635,16 +645,16 @@ class $TransactionsTable extends Transactions
   final VerificationMeta _categoryMeta = const VerificationMeta('category');
   @override
   late final GeneratedColumn<int?> category = GeneratedColumn<int?>(
-      'category', aliasedName, false,
+      'category', aliasedName, true,
       type: const IntType(),
-      requiredDuringInsert: true,
+      requiredDuringInsert: false,
       defaultConstraints: 'REFERENCES categories (id)');
   final VerificationMeta _userMeta = const VerificationMeta('user');
   @override
   late final GeneratedColumn<int?> user = GeneratedColumn<int?>(
-      'user', aliasedName, false,
+      'user', aliasedName, true,
       type: const IntType(),
-      requiredDuringInsert: true,
+      requiredDuringInsert: false,
       defaultConstraints: 'REFERENCES users (id)');
   final VerificationMeta _dateMeta = const VerificationMeta('date');
   @override
@@ -683,14 +693,10 @@ class $TransactionsTable extends Transactions
     if (data.containsKey('category')) {
       context.handle(_categoryMeta,
           category.isAcceptableOrUnknown(data['category']!, _categoryMeta));
-    } else if (isInserting) {
-      context.missing(_categoryMeta);
     }
     if (data.containsKey('user')) {
       context.handle(
           _userMeta, user.isAcceptableOrUnknown(data['user']!, _userMeta));
-    } else if (isInserting) {
-      context.missing(_userMeta);
     }
     if (data.containsKey('date')) {
       context.handle(
@@ -717,12 +723,32 @@ class $TransactionsTable extends Transactions
 
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
-  late final $UsersTable users = $UsersTable(this);
   late final $CategoriesTable categories = $CategoriesTable(this);
+  late final $UsersTable users = $UsersTable(this);
   late final $TransactionsTable transactions = $TransactionsTable(this);
+  late final TransactionDao transactionDao =
+      TransactionDao(this as AppDatabase);
+  late final CategoryDao categoryDao = CategoryDao(this as AppDatabase);
+  late final UserDao userDao = UserDao(this as AppDatabase);
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [users, categories, transactions];
+      [categories, users, transactions];
+}
+
+// **************************************************************************
+// DaoGenerator
+// **************************************************************************
+
+mixin _$TransactionDaoMixin on DatabaseAccessor<AppDatabase> {
+  $CategoriesTable get categories => attachedDatabase.categories;
+  $UsersTable get users => attachedDatabase.users;
+  $TransactionsTable get transactions => attachedDatabase.transactions;
+}
+mixin _$UserDaoMixin on DatabaseAccessor<AppDatabase> {
+  $UsersTable get users => attachedDatabase.users;
+}
+mixin _$CategoryDaoMixin on DatabaseAccessor<AppDatabase> {
+  $CategoriesTable get categories => attachedDatabase.categories;
 }

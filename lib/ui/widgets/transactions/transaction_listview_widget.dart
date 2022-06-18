@@ -94,10 +94,10 @@ class TransactionsListView extends StatefulWidget {
                                   '.${data.transaction.date.year.toString()}',
                                 style: const TextStyle(fontWeight: FontWeight.w300),
                               ),
-                              Text(
-                                "${data.category.type}: ${data.transaction.amount}",
-                                style: const TextStyle(fontWeight: FontWeight.w300),
-                              )
+                              // Text(
+                              //   "${data.category.type}: ${data.transaction.amount}",
+                              //   style: const TextStyle(fontWeight: FontWeight.w300),
+                              // )
                             ],
                           ),
                           const Divider(
@@ -110,7 +110,7 @@ class TransactionsListView extends StatefulWidget {
                               child: const Icon(Icons.description),
                             ),
                             title: Text(data.transaction.description),
-                            trailing: data.category.type.toLowerCase() == 'расход'
+                            trailing: data.category?.type.toLowerCase() == 'расход'
                                 ? Text('- ${data.transaction.amount}',
                                 style: const TextStyle(fontSize: 20))
                                 : Text(data.transaction.amount.toString(),
@@ -122,7 +122,7 @@ class TransactionsListView extends StatefulWidget {
                               backgroundColor: Colors.blue.withOpacity(.1),
                               child:const Icon(Icons.category),
                             ),
-                            title: Text(data.category.name),
+                            title: Text(data.category?.name ?? 'Не выбрана'),
                           ),
                           ListTile(
                             leading: CircleAvatar(
@@ -130,7 +130,7 @@ class TransactionsListView extends StatefulWidget {
                               backgroundColor: Colors.blue.withOpacity(.1),
                               child: const Icon(Icons.man),
                             ),
-                            title: Text(data.user.name),
+                            title: Text(data.user?.name ?? 'Не выбран'),
                           ),
                         ],
                       )

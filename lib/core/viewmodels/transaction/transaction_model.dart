@@ -27,12 +27,15 @@ class TransactionModel extends BaseModel {
   late String categoryName = 'Не выбрана';
   late String userName = 'Не выбран';
   DateTime date = DateTime.now();
+
+  late double totalIncome = 0;
+
   final DateFormat formatter = DateFormat('dd.MM.yyyy');
 
   init(TransactionWithCategoryAndUser? singleTransactionData) async {
     if (singleTransactionData != null) {      // For editTransactionView
-      category = singleTransactionData.category;
-      user = singleTransactionData.user;
+      category = singleTransactionData.category!;
+      user = singleTransactionData.user!;
       transaction = singleTransactionData.transaction;
 
       categoryName = category.name;
@@ -41,6 +44,7 @@ class TransactionModel extends BaseModel {
       descriptionController.text = transaction.description;
       amountController.text = transaction.amount.toString();
     } else {      // For transactionsView
+      // totalIncome = _moorDatabaseService.getTotalIncome();
       listOfTransactionsData = await _moorDatabaseService.getAllTransactions();
     }
 
