@@ -745,6 +745,17 @@ mixin _$TransactionDaoMixin on DatabaseAccessor<AppDatabase> {
   $CategoriesTable get categories => attachedDatabase.categories;
   $UsersTable get users => attachedDatabase.users;
   $TransactionsTable get transactions => attachedDatabase.transactions;
+  Selectable<double> getTotalSum(String? type) {
+    return customSelect(
+        'SELECT sum(transactions.amount) from transactions left join categories on transactions.category = categories.id where categories.type = :type;',
+        variables: [
+          Variable<String?>(type)
+        ],
+        readsFrom: {
+          transactions,
+          categories,
+        }).map((QueryRow row) => row.read<double>('sum(transactions.amount)'));
+  }
 }
 mixin _$UserDaoMixin on DatabaseAccessor<AppDatabase> {
   $UsersTable get users => attachedDatabase.users;

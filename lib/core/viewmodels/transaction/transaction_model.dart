@@ -28,7 +28,8 @@ class TransactionModel extends BaseModel {
   late String userName = 'Не выбран';
   DateTime date = DateTime.now();
 
-  late double totalIncome = 0;
+  double totalIncome = 0;
+  double totalExpense = 0;
 
   final DateFormat formatter = DateFormat('dd.MM.yyyy');
 
@@ -44,7 +45,8 @@ class TransactionModel extends BaseModel {
       descriptionController.text = transaction.description;
       amountController.text = transaction.amount.toString();
     } else {      // For transactionsView
-      // totalIncome = _moorDatabaseService.getTotalIncome();
+      totalIncome = await _moorDatabaseService.getTotalIncome();
+      totalExpense = await _moorDatabaseService.getTotalExpense();
       listOfTransactionsData = await _moorDatabaseService.getAllTransactions();
     }
 

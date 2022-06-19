@@ -44,7 +44,10 @@ class AppDatabase extends _$AppDatabase {
 }
 
 @UseDao(tables: [Transactions, Categories, Users],
-    queries: {})
+    queries: {
+  'getTotalSum': 'SELECT sum(transactions.amount) from transactions left join categories on transactions.category = categories.id where categories.type = :type;'
+
+    })
 class TransactionDao extends DatabaseAccessor<AppDatabase> with _$TransactionDaoMixin {
   final AppDatabase db;
 

@@ -19,7 +19,7 @@ class TransactionsView extends StatelessWidget {
           body: Column(
             children: <Widget>[
               // Виджет с дооходами, расходами, балансом
-              SummaryWidget(income: model.totalIncome.toInt(), expense: 0),
+              SummaryWidget(income: model.totalIncome.toInt(), expense: model.totalExpense.toInt()),
               // Виджет с листом из транзакций
               TransactionsListView(model.listOfTransactionsData, model),
             ],

@@ -105,9 +105,45 @@ class MoorDatabaseService {
     return await _database.transactionDao.deleteTransaction(transaction);
   }
 
-  // getTotalIncome() {
-  //   // return _database.transactionDao.getTotalIncome('Приход').get();
-  //   return _database.transactionDao.get;
-  // }
+  getTotalIncome() async {
+    List<double> list = await _database.transactionDao
+        .getTotalSum('Приход')
+        .get();
 
+    double sumOfIncome = 0;
+
+    if (list == null && list.isEmpty) {
+      return 0;
+    }
+
+    for (var element in list) {
+      if (element == null) {
+        continue;
+      }
+      sumOfIncome += element;
+    }
+
+    return sumOfIncome;
+  }
+
+  getTotalExpense() async {
+    List<double> list = await _database.transactionDao
+        .getTotalSum('Расход')
+        .get();
+
+    double sumOfExpense = 0;
+
+    if (list == null && list.isEmpty) {
+      return 0;
+    }
+
+    for (var element in list) {
+      if (element == null) {
+        continue;
+      }
+      sumOfExpense += element;
+    }
+
+    return sumOfExpense;
+  }
 }
