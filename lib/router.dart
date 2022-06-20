@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:moneylover/ui/views/category/categories_view.dart';
-import 'package:moneylover/ui/views/category/edit_category_view.dart';
-import 'package:moneylover/ui/views/category/insert_category_view.dart';
+import 'package:moneylover/ui/views/categories/categories_view.dart';
+import 'package:moneylover/ui/views/categories/edit_category_view.dart';
+import 'package:moneylover/ui/views/categories/insert_category_view.dart';
+import 'package:moneylover/ui/views/statistics/statistics_view.dart';
 import 'package:moneylover/ui/views/transactions/transactions_view.dart';
 import 'package:moneylover/ui/views/home/home_view.dart';
 import 'package:moneylover/ui/views/transactions/edit_transaction_view.dart';
@@ -11,7 +12,7 @@ import 'package:moneylover/ui/views/users/insert_user_view.dart';
 import 'package:moneylover/ui/views/users/users_view.dart';
 
 import 'core/database/moor_database.dart';
-
+import 'core/viewmodels/statistics/pie_chart_view.dart';
 
 class MyRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -38,21 +39,26 @@ class MyRouter {
 
       case 'categories':
         var isFromHomeView = settings.arguments as bool;
-        return MaterialPageRoute(builder: (_) => CategoriesView(isFromHomeView));
+        return MaterialPageRoute(
+            builder: (_) => CategoriesView(isFromHomeView));
       case 'newcategory':
         return MaterialPageRoute(builder: (_) => InsertCategoryView());
       case 'editcategory':
         var category = settings.arguments as Category;
         return MaterialPageRoute(builder: (_) => EditCategoryView(category));
 
+      case 'statistics':
+        return MaterialPageRoute(builder: (_) => StatisticsView());
+      case 'piechart':
+        return MaterialPageRoute(builder: (_) => PieChartView());
 
       default:
         return MaterialPageRoute(
             builder: (context) => Scaffold(
-              body: Center(
-                child: Text('No route defined for ${settings.name}'),
-              ),
-            ));
+                  body: Center(
+                    child: Text('No route defined for ${settings.name}'),
+                  ),
+                ));
     }
   }
 }

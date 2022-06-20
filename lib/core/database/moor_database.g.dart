@@ -166,7 +166,7 @@ class $CategoriesTable extends Categories
   late final GeneratedColumn<String?> name = GeneratedColumn<String?>(
       'name', aliasedName, false,
       additionalChecks:
-          GeneratedColumn.checkTextLength(minTextLength: 3, maxTextLength: 20),
+          GeneratedColumn.checkTextLength(minTextLength: 1, maxTextLength: 20),
       type: const StringType(),
       requiredDuringInsert: true);
   final VerificationMeta _typeMeta = const VerificationMeta('type');
@@ -394,7 +394,8 @@ class $UsersTable extends Users with TableInfo<$UsersTable, User> {
 class Transaction extends DataClass implements Insertable<Transaction> {
   final int id;
   final String description;
-  final double amount;
+  final int amount;
+  final String type;
   final int? category;
   final int? user;
   final DateTime date;
@@ -402,6 +403,7 @@ class Transaction extends DataClass implements Insertable<Transaction> {
       {required this.id,
       required this.description,
       required this.amount,
+      required this.type,
       this.category,
       this.user,
       required this.date});
@@ -413,8 +415,10 @@ class Transaction extends DataClass implements Insertable<Transaction> {
           .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
       description: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}description'])!,
-      amount: const RealType()
+      amount: const IntType()
           .mapFromDatabaseResponse(data['${effectivePrefix}amount'])!,
+      type: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}type'])!,
       category: const IntType()
           .mapFromDatabaseResponse(data['${effectivePrefix}category']),
       user: const IntType()
@@ -428,7 +432,8 @@ class Transaction extends DataClass implements Insertable<Transaction> {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['description'] = Variable<String>(description);
-    map['amount'] = Variable<double>(amount);
+    map['amount'] = Variable<int>(amount);
+    map['type'] = Variable<String>(type);
     if (!nullToAbsent || category != null) {
       map['category'] = Variable<int?>(category);
     }
@@ -444,6 +449,7 @@ class Transaction extends DataClass implements Insertable<Transaction> {
       id: Value(id),
       description: Value(description),
       amount: Value(amount),
+      type: Value(type),
       category: category == null && nullToAbsent
           ? const Value.absent()
           : Value(category),
@@ -458,7 +464,8 @@ class Transaction extends DataClass implements Insertable<Transaction> {
     return Transaction(
       id: serializer.fromJson<int>(json['id']),
       description: serializer.fromJson<String>(json['description']),
-      amount: serializer.fromJson<double>(json['amount']),
+      amount: serializer.fromJson<int>(json['amount']),
+      type: serializer.fromJson<String>(json['type']),
       category: serializer.fromJson<int?>(json['category']),
       user: serializer.fromJson<int?>(json['user']),
       date: serializer.fromJson<DateTime>(json['date']),
@@ -470,7 +477,8 @@ class Transaction extends DataClass implements Insertable<Transaction> {
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'description': serializer.toJson<String>(description),
-      'amount': serializer.toJson<double>(amount),
+      'amount': serializer.toJson<int>(amount),
+      'type': serializer.toJson<String>(type),
       'category': serializer.toJson<int?>(category),
       'user': serializer.toJson<int?>(user),
       'date': serializer.toJson<DateTime>(date),
@@ -480,7 +488,8 @@ class Transaction extends DataClass implements Insertable<Transaction> {
   Transaction copyWith(
           {int? id,
           String? description,
-          double? amount,
+          int? amount,
+          String? type,
           int? category,
           int? user,
           DateTime? date}) =>
@@ -488,6 +497,7 @@ class Transaction extends DataClass implements Insertable<Transaction> {
         id: id ?? this.id,
         description: description ?? this.description,
         amount: amount ?? this.amount,
+        type: type ?? this.type,
         category: category ?? this.category,
         user: user ?? this.user,
         date: date ?? this.date,
@@ -498,6 +508,7 @@ class Transaction extends DataClass implements Insertable<Transaction> {
           ..write('id: $id, ')
           ..write('description: $description, ')
           ..write('amount: $amount, ')
+          ..write('type: $type, ')
           ..write('category: $category, ')
           ..write('user: $user, ')
           ..write('date: $date')
@@ -507,7 +518,7 @@ class Transaction extends DataClass implements Insertable<Transaction> {
 
   @override
   int get hashCode =>
-      Object.hash(id, description, amount, category, user, date);
+      Object.hash(id, description, amount, type, category, user, date);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -515,6 +526,7 @@ class Transaction extends DataClass implements Insertable<Transaction> {
           other.id == this.id &&
           other.description == this.description &&
           other.amount == this.amount &&
+          other.type == this.type &&
           other.category == this.category &&
           other.user == this.user &&
           other.date == this.date);
@@ -523,7 +535,8 @@ class Transaction extends DataClass implements Insertable<Transaction> {
 class TransactionsCompanion extends UpdateCompanion<Transaction> {
   final Value<int> id;
   final Value<String> description;
-  final Value<double> amount;
+  final Value<int> amount;
+  final Value<String> type;
   final Value<int?> category;
   final Value<int?> user;
   final Value<DateTime> date;
@@ -531,6 +544,7 @@ class TransactionsCompanion extends UpdateCompanion<Transaction> {
     this.id = const Value.absent(),
     this.description = const Value.absent(),
     this.amount = const Value.absent(),
+    this.type = const Value.absent(),
     this.category = const Value.absent(),
     this.user = const Value.absent(),
     this.date = const Value.absent(),
@@ -538,17 +552,20 @@ class TransactionsCompanion extends UpdateCompanion<Transaction> {
   TransactionsCompanion.insert({
     this.id = const Value.absent(),
     required String description,
-    required double amount,
+    required int amount,
+    required String type,
     this.category = const Value.absent(),
     this.user = const Value.absent(),
     required DateTime date,
   })  : description = Value(description),
         amount = Value(amount),
+        type = Value(type),
         date = Value(date);
   static Insertable<Transaction> custom({
     Expression<int>? id,
     Expression<String>? description,
-    Expression<double>? amount,
+    Expression<int>? amount,
+    Expression<String>? type,
     Expression<int?>? category,
     Expression<int?>? user,
     Expression<DateTime>? date,
@@ -557,6 +574,7 @@ class TransactionsCompanion extends UpdateCompanion<Transaction> {
       if (id != null) 'id': id,
       if (description != null) 'description': description,
       if (amount != null) 'amount': amount,
+      if (type != null) 'type': type,
       if (category != null) 'category': category,
       if (user != null) 'user': user,
       if (date != null) 'date': date,
@@ -566,7 +584,8 @@ class TransactionsCompanion extends UpdateCompanion<Transaction> {
   TransactionsCompanion copyWith(
       {Value<int>? id,
       Value<String>? description,
-      Value<double>? amount,
+      Value<int>? amount,
+      Value<String>? type,
       Value<int?>? category,
       Value<int?>? user,
       Value<DateTime>? date}) {
@@ -574,6 +593,7 @@ class TransactionsCompanion extends UpdateCompanion<Transaction> {
       id: id ?? this.id,
       description: description ?? this.description,
       amount: amount ?? this.amount,
+      type: type ?? this.type,
       category: category ?? this.category,
       user: user ?? this.user,
       date: date ?? this.date,
@@ -590,7 +610,10 @@ class TransactionsCompanion extends UpdateCompanion<Transaction> {
       map['description'] = Variable<String>(description.value);
     }
     if (amount.present) {
-      map['amount'] = Variable<double>(amount.value);
+      map['amount'] = Variable<int>(amount.value);
+    }
+    if (type.present) {
+      map['type'] = Variable<String>(type.value);
     }
     if (category.present) {
       map['category'] = Variable<int?>(category.value);
@@ -610,6 +633,7 @@ class TransactionsCompanion extends UpdateCompanion<Transaction> {
           ..write('id: $id, ')
           ..write('description: $description, ')
           ..write('amount: $amount, ')
+          ..write('type: $type, ')
           ..write('category: $category, ')
           ..write('user: $user, ')
           ..write('date: $date')
@@ -639,9 +663,14 @@ class $TransactionsTable extends Transactions
       type: const StringType(), requiredDuringInsert: true);
   final VerificationMeta _amountMeta = const VerificationMeta('amount');
   @override
-  late final GeneratedColumn<double?> amount = GeneratedColumn<double?>(
+  late final GeneratedColumn<int?> amount = GeneratedColumn<int?>(
       'amount', aliasedName, false,
-      type: const RealType(), requiredDuringInsert: true);
+      type: const IntType(), requiredDuringInsert: true);
+  final VerificationMeta _typeMeta = const VerificationMeta('type');
+  @override
+  late final GeneratedColumn<String?> type = GeneratedColumn<String?>(
+      'type', aliasedName, false,
+      type: const StringType(), requiredDuringInsert: true);
   final VerificationMeta _categoryMeta = const VerificationMeta('category');
   @override
   late final GeneratedColumn<int?> category = GeneratedColumn<int?>(
@@ -663,7 +692,7 @@ class $TransactionsTable extends Transactions
       type: const IntType(), requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns =>
-      [id, description, amount, category, user, date];
+      [id, description, amount, type, category, user, date];
   @override
   String get aliasedName => _alias ?? 'transactions';
   @override
@@ -689,6 +718,12 @@ class $TransactionsTable extends Transactions
           amount.isAcceptableOrUnknown(data['amount']!, _amountMeta));
     } else if (isInserting) {
       context.missing(_amountMeta);
+    }
+    if (data.containsKey('type')) {
+      context.handle(
+          _typeMeta, type.isAcceptableOrUnknown(data['type']!, _typeMeta));
+    } else if (isInserting) {
+      context.missing(_typeMeta);
     }
     if (data.containsKey('category')) {
       context.handle(_categoryMeta,
@@ -730,6 +765,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
       TransactionDao(this as AppDatabase);
   late final CategoryDao categoryDao = CategoryDao(this as AppDatabase);
   late final UserDao userDao = UserDao(this as AppDatabase);
+  late final StatisticsDao statisticsDao = StatisticsDao(this as AppDatabase);
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override
@@ -745,16 +781,15 @@ mixin _$TransactionDaoMixin on DatabaseAccessor<AppDatabase> {
   $CategoriesTable get categories => attachedDatabase.categories;
   $UsersTable get users => attachedDatabase.users;
   $TransactionsTable get transactions => attachedDatabase.transactions;
-  Selectable<double> getTotalSum(String? type) {
+  Selectable<int> getTotalSum(String type) {
     return customSelect(
-        'SELECT sum(transactions.amount) from transactions left join categories on transactions.category = categories.id where categories.type = :type;',
+        'SELECT sum(transactions.amount) from transactions where transactions.type = :type;',
         variables: [
-          Variable<String?>(type)
+          Variable<String>(type)
         ],
         readsFrom: {
           transactions,
-          categories,
-        }).map((QueryRow row) => row.read<double>('sum(transactions.amount)'));
+        }).map((QueryRow row) => row.read<int>('sum(transactions.amount)'));
   }
 }
 mixin _$UserDaoMixin on DatabaseAccessor<AppDatabase> {
@@ -762,4 +797,34 @@ mixin _$UserDaoMixin on DatabaseAccessor<AppDatabase> {
 }
 mixin _$CategoryDaoMixin on DatabaseAccessor<AppDatabase> {
   $CategoriesTable get categories => attachedDatabase.categories;
+}
+mixin _$StatisticsDaoMixin on DatabaseAccessor<AppDatabase> {
+  $CategoriesTable get categories => attachedDatabase.categories;
+  $UsersTable get users => attachedDatabase.users;
+  $TransactionsTable get transactions => attachedDatabase.transactions;
+  Selectable<GetCategoriesCountResult> getCategoriesCount(String type) {
+    return customSelect(
+        'SELECT categories.name, count(categories.name)from transactions inner join categories on transactions.category = categories.id where transactions.type = :type group by (categories.name);',
+        variables: [
+          Variable<String>(type)
+        ],
+        readsFrom: {
+          categories,
+          transactions,
+        }).map((QueryRow row) {
+      return GetCategoriesCountResult(
+        name: row.read<String>('name'),
+        countcategoriesname: row.read<int>('count(categories.name)'),
+      );
+    });
+  }
+}
+
+class GetCategoriesCountResult {
+  final String name;
+  final int countcategoriesname;
+  GetCategoriesCountResult({
+    required this.name,
+    required this.countcategoriesname,
+  });
 }

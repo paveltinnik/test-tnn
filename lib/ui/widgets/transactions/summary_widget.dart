@@ -36,7 +36,7 @@ class SummaryWidget extends StatelessWidget {
               ),
               Column(
                 children: <Widget>[
-                  Text(
+                  const Text(
                     'Расходы',
                     style: summaryTextStyle,
                   ),

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import '../database/moor_database.dart';
 
 class MoorDatabaseService {
@@ -106,44 +108,79 @@ class MoorDatabaseService {
   }
 
   getTotalIncome() async {
-    List<double> list = await _database.transactionDao
-        .getTotalSum('Приход')
-        .get();
+    try {
+      List<int> list = await _database.transactionDao
+          .getTotalSum('Приход')
+          .get();
 
-    double sumOfIncome = 0;
+      int sumOfIncome = 0;
 
-    if (list == null && list.isEmpty) {
+      if (list == null && list.length == 0) {
+        return 0;
+      }
+
+      for (var element in list) {
+        if (element == null) {
+          continue;
+        }
+        sumOfIncome += element;
+      }
+
+      return sumOfIncome;
+    } catch(e, s) {
+      print('Exception in getTotalExpense(): $e');
+      print('Stack: $s');
+
       return 0;
     }
-
-    for (var element in list) {
-      if (element == null) {
-        continue;
-      }
-      sumOfIncome += element;
-    }
-
-    return sumOfIncome;
   }
 
   getTotalExpense() async {
-    List<double> list = await _database.transactionDao
-        .getTotalSum('Расход')
-        .get();
+    try {
+      List<int> list = await _database.transactionDao
+          .getTotalSum('Расход')
+          .get();
 
-    double sumOfExpense = 0;
+      int sumOfExpense = 0;
 
-    if (list == null && list.isEmpty) {
+      if (list == null && list.length == 0) {
+        return 0;
+      }
+
+      for (var element in list) {
+        if (element == null) {
+          continue;
+        }
+        sumOfExpense += element;
+      }
+
+      return sumOfExpense;
+    } catch (e, s) {
+      print('Exception in getTotalExpense(): $e');
+      print('Stack: $s');
+
       return 0;
     }
+  }
 
-    for (var element in list) {
-      if (element == null) {
-        continue;
+  getCategoriesCount(type) async {
+    Map<String, double> map = {};
+
+    try {
+      List list = await _database.statisticsDao.getCategoriesCount(type).get();
+
+      for (var i in list) {
+        if (i == null) {
+          continue;
+        }
+
+        map[i.name] = (i.countcategoriesname).toDouble();
       }
-      sumOfExpense += element;
-    }
 
-    return sumOfExpense;
+      return map;
+    } catch (e, s) {
+      print('Exception in getCategoriesCount(type): $e');
+      print('Stack: $s');
+    }
   }
 }

@@ -4,7 +4,7 @@ import 'package:moneylover/locator.dart';
 import 'package:moneylover/ui/widgets/common/text_form_field_widget.dart';
 import 'package:moor/moor.dart';
 import 'package:toast/toast.dart';
-import '../../../ui/views/category/categories_view.dart';
+import '../../../ui/views/categories/categories_view.dart';
 import '../../../ui/views/users/users_view.dart';
 import '../../database/moor_database.dart';
 import '../../enums/viewstate.dart';
@@ -28,8 +28,8 @@ class TransactionModel extends BaseModel {
   late String userName = 'Не выбран';
   DateTime date = DateTime.now();
 
-  double totalIncome = 0;
-  double totalExpense = 0;
+  int totalIncome = 0;
+  int totalExpense = 0;
 
   final DateFormat formatter = DateFormat('dd.MM.yyyy');
 
@@ -66,7 +66,8 @@ class TransactionModel extends BaseModel {
 
     TransactionsCompanion newTransaction = TransactionsCompanion(
         description: Value(descriptionController.text),
-        amount: Value(double.parse(amountController.text)),
+        amount: Value(int.parse(amountController.text)),
+        type: Value(category.type),
         category: Value(category.id),
         user: Value(user.id),
         date: Value(date)
@@ -96,10 +97,11 @@ class TransactionModel extends BaseModel {
     Transaction newTransaction = Transaction(
         id: transaction.id,
         description: descriptionController.text,
-        amount: double.parse(amountController.text),
+        type: category.type,
+        amount: int.parse(amountController.text),
         category: category.id,
         user: user.id,
-        date: date
+        date: date,
     );
 
     // insert it!

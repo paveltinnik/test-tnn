@@ -4,7 +4,7 @@ import 'package:moneylover/ui/shared/ui_helpers.dart';
 
 import '../../../core/viewmodels/transaction/transaction_model.dart';
 import '../base_view.dart';
-import '../category/categories_view.dart';
+import '../categories/categories_view.dart';
 
 class EditTransactionView extends StatelessWidget {
   TransactionWithCategoryAndUser singleTransactionData;

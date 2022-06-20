@@ -10,14 +10,15 @@ class Users extends Table {
 @DataClassName('Category')
 class Categories extends Table {
   IntColumn get id => integer().autoIncrement()();
-  TextColumn get name => text().withLength(min: 3, max: 20)();
+  TextColumn get name => text().withLength(min: 1, max: 20)();
   TextColumn get type => text()();
 }
 
 class Transactions extends Table {
   IntColumn get id => integer().autoIncrement()();
   TextColumn get description => text()();
-  RealColumn get amount => real()();
+  IntColumn get amount => integer()();
+  TextColumn get type => text()();
   IntColumn get category => integer().nullable().references(Categories, #id)();
   IntColumn get user => integer().nullable().references(Users, #id)();
   DateTimeColumn get date => dateTime()();
@@ -33,7 +34,7 @@ class TransactionWithCategoryAndUser {
 
 @UseMoor(
     tables: [Transactions, Categories, Users],
-    daos: [TransactionDao, CategoryDao, UserDao]
+    daos: [TransactionDao, CategoryDao, UserDao, StatisticsDao]
 )
 class AppDatabase extends _$AppDatabase {
   AppDatabase()
@@ -45,8 +46,10 @@ class AppDatabase extends _$AppDatabase {
 
 @UseDao(tables: [Transactions, Categories, Users],
     queries: {
-  'getTotalSum': 'SELECT sum(transactions.amount) from transactions left join categories on transactions.category = categories.id where categories.type = :type;'
-
+  'getTotalSum':
+      'SELECT sum(transactions.amount) '
+      'from transactions '
+      'where transactions.type = :type;'
     })
 class TransactionDao extends DatabaseAccessor<AppDatabase> with _$TransactionDaoMixin {
   final AppDatabase db;
@@ -61,8 +64,10 @@ class TransactionDao extends DatabaseAccessor<AppDatabase> with _$TransactionDao
     ]).get();
 
     return rows.map((resultRow) {
-      return TransactionWithCategoryAndUser(resultRow.readTable(transactions),
-          resultRow.readTableOrNull(users), resultRow.readTableOrNull(categories));
+      return TransactionWithCategoryAndUser(
+          resultRow.readTable(transactions),
+          resultRow.readTableOrNull(users),
+          resultRow.readTableOrNull(categories));
     }).toList();
   }
 
@@ -74,14 +79,6 @@ class TransactionDao extends DatabaseAccessor<AppDatabase> with _$TransactionDao
 
   Future deleteTransaction(Insertable<Transaction> transaction) =>
       delete(transactions).delete(transaction);
-
-  // Income
-  // getTotalIncome() async {
-  //   final rows = await select(transactions).join([
-  //     innerJoin(categories, categories.id.equalsExp(transactions.category)),
-  //     innerJoin(users, transactions.user.equalsExp(users.id))
-  //   ]).get();
-  // }
 }
 
 @UseDao(tables: [Users])
@@ -123,4 +120,21 @@ class CategoryDao extends DatabaseAccessor<AppDatabase> with _$CategoryDaoMixin 
 
   Future updateCategory(Insertable<Category> category) =>
       update(categories).replace(category);
+}
+
+@UseDao(tables: [Transactions, Categories, Users],
+  queries: {
+  'getCategoriesCount':
+      'SELECT categories.name, count(categories.name)'
+          'from transactions '
+          'inner join categories on transactions.category = categories.id '
+          'where transactions.type = :type '
+          'group by (categories.name);'
+  }
+)
+class StatisticsDao extends DatabaseAccessor<AppDatabase> with _$StatisticsDaoMixin {
+  final AppDatabase db;
+
+  // Called by the AppDatabase class
+  StatisticsDao(this.db) : super(db);
 }

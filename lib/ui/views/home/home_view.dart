@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class HomeView extends StatelessWidget {
+  const HomeView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -19,7 +21,6 @@ class HomeView extends StatelessWidget {
               child: ElevatedButton.icon(
                 onPressed: () {
                   Navigator.of(context).pushNamed('inserttransaction');
-                  // simpleDialogWithOption(context);
                 },
                 icon: Icon(Icons.shopping_cart),
                 label: Text('Добавить операцию'),
@@ -30,7 +31,6 @@ class HomeView extends StatelessWidget {
               child: ElevatedButton.icon(
                 onPressed: () {
                   Navigator.of(context).pushNamed('transactions');
-                  // simpleDialogWithOption(context);
                 },
                 icon: Icon(Icons.wallet),
                 label: Text('Книга учета'),
@@ -40,11 +40,10 @@ class HomeView extends StatelessWidget {
               padding: const EdgeInsets.all(10),
               child: ElevatedButton.icon(
                 onPressed: () {
-                  Navigator.of(context).pushNamed('expense_book');
-                  // simpleDialogWithOption(context);
+                  Navigator.of(context).pushNamed('statistics');
                 },
-                icon: Icon(Icons.bar_chart),
-                label: Text('Статистика'),
+                icon: const Icon(Icons.bar_chart),
+                label: const Text('Статистика'),
               ),
             ),
             Padding(

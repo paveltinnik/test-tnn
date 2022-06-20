@@ -94,10 +94,10 @@ class TransactionsListView extends StatefulWidget {
                                   '.${data.transaction.date.year.toString()}',
                                 style: const TextStyle(fontWeight: FontWeight.w300),
                               ),
-                              // Text(
-                              //   "${data.category.type}: ${data.transaction.amount}",
-                              //   style: const TextStyle(fontWeight: FontWeight.w300),
-                              // )
+                              Text(
+                                "${data.transaction.type}",
+                                style: const TextStyle(fontWeight: FontWeight.w300),
+                              )
                             ],
                           ),
                           const Divider(
