@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:moneylover/ui/views/categories/categories_view.dart';
 import 'package:moneylover/ui/views/categories/edit_category_view.dart';
 import 'package:moneylover/ui/views/categories/insert_category_view.dart';
 import 'package:moneylover/ui/views/statistics/statistics_view.dart';
+import 'package:moneylover/ui/views/statistics/users_balance_chart_view.dart';
 import 'package:moneylover/ui/views/transactions/transactions_view.dart';
 import 'package:moneylover/ui/views/home/home_view.dart';
 import 'package:moneylover/ui/views/transactions/edit_transaction_view.dart';
@@ -12,7 +15,8 @@ import 'package:moneylover/ui/views/users/insert_user_view.dart';
 import 'package:moneylover/ui/views/users/users_view.dart';
 
 import 'core/database/moor_database.dart';
-import 'core/viewmodels/statistics/pie_chart_view.dart';
+import 'ui/views/statistics/pie_chart_view.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
 
 class MyRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -51,6 +55,8 @@ class MyRouter {
         return MaterialPageRoute(builder: (_) => StatisticsView());
       case 'piechart':
         return MaterialPageRoute(builder: (_) => PieChartView());
+      case 'usersbalancechart':
+        return MaterialPageRoute(builder: (_) => UsersBalanceChart());
 
       default:
         return MaterialPageRoute(
@@ -60,5 +66,7 @@ class MyRouter {
                   ),
                 ));
     }
+
+
   }
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:moneylover/ui/shared/ui_helpers.dart';
 
 import '../../../core/database/moor_database.dart';
-import '../../../core/viewmodels/category/edit_category_model.dart';
+import '../../../core/viewmodels/category/category_model.dart';
 import '../base_view.dart';
 
 class EditCategoryView extends StatelessWidget {
@@ -15,8 +15,8 @@ class EditCategoryView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BaseView<EditCategoryModel>(
-        onModelReady: (model) async => await model.init(category),
+    return BaseView<CategoryModel>(
+        onModelReady: (model) async => await model.init(category: category, isInsertView: false),
         builder: (context, model, child) => Scaffold(
           appBar: AppBar(
             title: const Text('Редактировать категорию'),
@@ -26,7 +26,7 @@ class EditCategoryView extends StatelessWidget {
               padding: const EdgeInsets.all(16.0),
               child: ListView(
                 children: <Widget>[
-                  buildTextField(model.nameController, 'Категория:',
+                  model.buildTextField(model.nameController, 'Категория:',
                       "Введите название категории", Icons.edit, false),
                   UIHelper.verticalSpaceMedium(),
                   Padding(
@@ -59,8 +59,6 @@ class EditCategoryView extends StatelessWidget {
                           'Сохранить',
                           style: TextStyle(fontSize: 16),
                         ),
-                        // color: backgroundColor,
-                        // textColor: Colors.black,
                         onPressed: () {
                           model.updateCategory(context, transactionType);
                         }
@@ -71,36 +69,5 @@ class EditCategoryView extends StatelessWidget {
             ),
           ),
         ));
-  }
-
-  TextFormField buildTextField(TextEditingController controller, String text,
-      String helperText, IconData icon, isNumeric) {
-    return TextFormField(
-      cursorColor: Colors.black,
-      maxLength: isNumeric ? 10 : 40,
-      keyboardType: isNumeric ? TextInputType.number : TextInputType.text,
-      controller: controller,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(),
-        icon: Icon(
-          icon,
-          color: Colors.black,
-        ),
-        labelText: text,
-        suffixIcon: InkWell(
-          onTap: () {
-            controller.clear();
-          },
-          child: const Icon(
-            Icons.clear,
-            color: Colors.black,
-          ),
-        ),
-        labelStyle: TextStyle(
-          color: Color(0xFFFF000000),
-        ),
-        helperText: helperText,
-      ),
-    );
   }
 }

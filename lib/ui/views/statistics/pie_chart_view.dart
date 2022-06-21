@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:moneylover/core/viewmodels/statistics/statistics_model.dart';
 import 'package:pie_chart/pie_chart.dart';
 
-import '../../../ui/views/base_view.dart';
+import '../base_view.dart';
 
 class PieChartView extends StatelessWidget {
   const PieChartView({Key? key}) : super(key: key);
@@ -32,11 +32,11 @@ class PieChartView extends StatelessWidget {
                         label: (i, v) => v),
                     choiceActiveStyle: const C2ChoiceStyle(
                       color: Color.fromARGB(255, 54, 57, 244),
-                      borderColor: Colors.red,
+                      borderColor: Colors.blue,
                       borderRadius: BorderRadius.all(Radius.circular(5)),
                     ),
                     choiceStyle: const C2ChoiceStyle(
-                      color: Colors.red,
+                      color: Colors.blue,
                       borderRadius: BorderRadius.all(Radius.circular(5)),
                     ),
                     wrapped: true,
@@ -48,7 +48,7 @@ class PieChartView extends StatelessWidget {
                   )
                       : PieChart(
                     dataMap: model.dataMap,
-                    chartValuesOptions: ChartValuesOptions(
+                    chartValuesOptions: const ChartValuesOptions(
                     showChartValuesInPercentage: true,
                   ),
                   ),

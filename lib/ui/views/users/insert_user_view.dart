@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:moneylover/core/viewmodels/user/insert_user_model.dart';
 import 'package:moneylover/ui/shared/ui_helpers.dart';
+import '../../../core/viewmodels/user/user_model.dart';
 import '../base_view.dart';
 
 class InsertUserView extends StatelessWidget {
@@ -8,8 +8,8 @@ class InsertUserView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BaseView<InsertUserModel>(
-        onModelReady: (model) async => await model.init(),
+    return BaseView<UserModel>(
+        onModelReady: (model) async => await model.init(user: null, isInsertView: true),
         builder: (context, model, child) =>
             Scaffold(
               appBar: AppBar(

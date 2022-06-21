@@ -14,7 +14,7 @@ class UsersView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseView<UserModel>(
-        onModelReady: (model) async => await model.init(),
+        onModelReady: (model) async => await model.init(user: null, isInsertView: false),
         builder: (context, model, child) => Scaffold(
               appBar: AppBar(
                 title: const Text('Пользователи'),

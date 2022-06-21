@@ -25,6 +25,17 @@ class StatisticsView extends StatelessWidget {
                     label: Text('Диаграмма по категориям'),
                   ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: ElevatedButton.icon(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('usersbalancechart');
+                      // simpleDialogWithOption(context);
+                    },
+                    icon: const Icon(Icons.balance),
+                    label: const Text('Доходы пользователей'),
+                  ),
+                )
               ]
           ),
     );

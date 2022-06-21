@@ -22,44 +22,48 @@ class _CategoriesViewState extends State<CategoriesView> {
   @override
   Widget build(BuildContext context) {
     return BaseView<CategoryModel>(
-        onModelReady: (model) async => await model.init(transactionType),
+        onModelReady: (model) async => await model.init(
+            transactionType: transactionType, isInsertView: false),
         builder: (context, model, child) => Scaffold(
-          appBar: AppBar(
-            title: const Text('Категории'),
-          ),
-          body: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(50, 8, 8, 8),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Icon(Icons.request_quote_outlined),
-                    UIHelper.horizontalSpace(25),
-                    DropdownButton(
-                      value: transactionType,
-                      items: const [
-                        DropdownMenuItem(value: 'Приход', child: Text('Приход')),
-                        DropdownMenuItem(value: 'Расход', child: Text('Расход')),
-                      ],
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          transactionType = newValue!;
-                          model.init(transactionType);
-                        });
-                      },
-                    ),
-                  ],
-                ),
+              appBar: AppBar(
+                title: const Text('Категории'),
               ),
-              buildListView(model),
-            ],
-          ),
-          floatingActionButton: const Visibility(
-            child: AppFabCategory(),
-          ),
-        )
-    );
+              body: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(50, 8, 8, 8),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const Icon(Icons.request_quote_outlined),
+                        UIHelper.horizontalSpace(25),
+                        DropdownButton(
+                          value: transactionType,
+                          items: const [
+                            DropdownMenuItem(
+                                value: 'Приход', child: Text('Приход')),
+                            DropdownMenuItem(
+                                value: 'Расход', child: Text('Расход')),
+                          ],
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              transactionType = newValue!;
+                              model.init(
+                                  transactionType: transactionType,
+                                  isInsertView: false);
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  buildListView(model),
+                ],
+              ),
+              floatingActionButton: const Visibility(
+                child: AppFabCategory(),
+              ),
+            ));
   }
 
   Widget buildListView(model) {
@@ -70,5 +74,3 @@ class _CategoriesViewState extends State<CategoriesView> {
     }
   }
 }
-
-

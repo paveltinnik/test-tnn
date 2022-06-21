@@ -804,7 +804,7 @@ mixin _$StatisticsDaoMixin on DatabaseAccessor<AppDatabase> {
   $TransactionsTable get transactions => attachedDatabase.transactions;
   Selectable<GetCategoriesCountResult> getCategoriesCount(String type) {
     return customSelect(
-        'SELECT categories.name, count(categories.name)from transactions inner join categories on transactions.category = categories.id where transactions.type = :type group by (categories.name);',
+        'select categories.name, count(categories.name)from transactions inner join categories on transactions.category = categories.id where transactions.type = :type group by (categories.name);',
         variables: [
           Variable<String>(type)
         ],
@@ -818,6 +818,23 @@ mixin _$StatisticsDaoMixin on DatabaseAccessor<AppDatabase> {
       );
     });
   }
+
+  Selectable<GetUsersBalanceByTypeResult> getUsersBalanceByType(String type) {
+    return customSelect(
+        'select users.name, sum(transactions.amount) from transactions inner join users on transactions.user = users.id where transactions.type = :type group by users.name order by sum(transactions.amount);',
+        variables: [
+          Variable<String>(type)
+        ],
+        readsFrom: {
+          users,
+          transactions,
+        }).map((QueryRow row) {
+      return GetUsersBalanceByTypeResult(
+        name: row.read<String>('name'),
+        sumtransactionsamount: row.read<int>('sum(transactions.amount)'),
+      );
+    });
+  }
 }
 
 class GetCategoriesCountResult {
@@ -826,5 +843,14 @@ class GetCategoriesCountResult {
   GetCategoriesCountResult({
     required this.name,
     required this.countcategoriesname,
+  });
+}
+
+class GetUsersBalanceByTypeResult {
+  final String name;
+  final int sumtransactionsamount;
+  GetUsersBalanceByTypeResult({
+    required this.name,
+    required this.sumtransactionsamount,
   });
 }

@@ -21,8 +21,8 @@ class TransactionModel extends BaseModel {
   List<TransactionWithCategoryAndUser> listOfTransactionsData = <TransactionWithCategoryAndUser>[];
 
   late Transaction transaction;
-  late Category category;
-  late User user;
+  late Category? category;
+  late User? user;
 
   late String categoryName = 'Не выбрана';
   late String userName = 'Не выбран';
@@ -34,17 +34,21 @@ class TransactionModel extends BaseModel {
   final DateFormat formatter = DateFormat('dd.MM.yyyy');
 
   init(TransactionWithCategoryAndUser? singleTransactionData) async {
-    if (singleTransactionData != null) {      // For editTransactionView
-      category = singleTransactionData.category!;
-      user = singleTransactionData.user!;
+    if (singleTransactionData != null) { // For editTransactionView
+      category = singleTransactionData.category;
+      user = singleTransactionData.user;
       transaction = singleTransactionData.transaction;
 
-      categoryName = category.name;
-      userName = user.name;
+      if (category != null) {
+        categoryName = category!.name;
+      }
+      if (user != null) {
+        userName = user!.name;
+      }
       date = transaction.date;
       descriptionController.text = transaction.description;
       amountController.text = transaction.amount.toString();
-    } else {      // For transactionsView
+    } else { // For transactionsView
       totalIncome = await _moorDatabaseService.getTotalIncome();
       totalExpense = await _moorDatabaseService.getTotalExpense();
       listOfTransactionsData = await _moorDatabaseService.getAllTransactions();
@@ -67,9 +71,9 @@ class TransactionModel extends BaseModel {
     TransactionsCompanion newTransaction = TransactionsCompanion(
         description: Value(descriptionController.text),
         amount: Value(int.parse(amountController.text)),
-        type: Value(category.type),
-        category: Value(category.id),
-        user: Value(user.id),
+        type: Value(category!.type),
+        category: Value(category!.id),
+        user: Value(user!.id),
         date: Value(date)
     );
 
@@ -84,9 +88,6 @@ class TransactionModel extends BaseModel {
   }
 
   void updateTransaction(context) async {
-    // String newDescription = descriptionController.text;
-    // String newAmount = amountController.text;
-
     ToastContext().init(context);
 
     if (descriptionController.text.isEmpty || amountController.text.isEmpty) {
@@ -97,10 +98,10 @@ class TransactionModel extends BaseModel {
     Transaction newTransaction = Transaction(
         id: transaction.id,
         description: descriptionController.text,
-        type: category.type,
+        type: category!.type,
         amount: int.parse(amountController.text),
-        category: category.id,
-        user: user.id,
+        category: category!.id,
+        user: user!.id,
         date: date,
     );
 
@@ -146,7 +147,7 @@ class TransactionModel extends BaseModel {
     await _awaitReturnValueFromCategoryView(context)
         .then((value) => category = value);
 
-    categoryName = category.name;
+    categoryName = category!.name;
     notifyListeners();
   }
 
@@ -154,7 +155,7 @@ class TransactionModel extends BaseModel {
     await _awaitReturnValueFromUsersView(context)
         .then((value) => user = value);
 
-    userName = user.name;
+    userName = user!.name;
     notifyListeners();
   }
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:moneylover/core/viewmodels/user/edit_user_model.dart';
 import 'package:moneylover/ui/shared/ui_helpers.dart';
 
 import '../../../core/database/moor_database.dart';
+import '../../../core/viewmodels/user/user_model.dart';
 import '../base_view.dart';
 
 class EditUserView extends StatelessWidget {
@@ -12,8 +12,8 @@ class EditUserView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BaseView<EditUserModel>(
-        onModelReady: (model) async => await model.init(user),
+    return BaseView<UserModel>(
+        onModelReady: (model) async => await model.init(user: user, isInsertView: false),
         builder: (context, model, child) => Scaffold(
               appBar: AppBar(
                 title: const Text('Редактировать пользователя'),

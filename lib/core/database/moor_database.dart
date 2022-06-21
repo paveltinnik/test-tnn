@@ -4,23 +4,32 @@ part 'moor_database.g.dart';
 
 class Users extends Table {
   IntColumn get id => integer().autoIncrement()();
+
   TextColumn get name => text().withLength(min: 1, max: 20)();
 }
 
 @DataClassName('Category')
 class Categories extends Table {
   IntColumn get id => integer().autoIncrement()();
+
   TextColumn get name => text().withLength(min: 1, max: 20)();
+
   TextColumn get type => text()();
 }
 
 class Transactions extends Table {
   IntColumn get id => integer().autoIncrement()();
+
   TextColumn get description => text()();
+
   IntColumn get amount => integer()();
+
   TextColumn get type => text()();
+
   IntColumn get category => integer().nullable().references(Categories, #id)();
+
   IntColumn get user => integer().nullable().references(Users, #id)();
+
   DateTimeColumn get date => dateTime()();
 }
 
@@ -34,8 +43,7 @@ class TransactionWithCategoryAndUser {
 
 @UseMoor(
     tables: [Transactions, Categories, Users],
-    daos: [TransactionDao, CategoryDao, UserDao, StatisticsDao]
-)
+    daos: [TransactionDao, CategoryDao, UserDao, StatisticsDao])
 class AppDatabase extends _$AppDatabase {
   AppDatabase()
       : super(FlutterQueryExecutor.inDatabaseFolder(
@@ -44,14 +52,17 @@ class AppDatabase extends _$AppDatabase {
   int get schemaVersion => 1;
 }
 
-@UseDao(tables: [Transactions, Categories, Users],
-    queries: {
-  'getTotalSum':
-      'SELECT sum(transactions.amount) '
+@UseDao(tables: [
+  Transactions,
+  Categories,
+  Users
+], queries: {
+  'getTotalSum': 'SELECT sum(transactions.amount) '
       'from transactions '
       'where transactions.type = :type;'
-    })
-class TransactionDao extends DatabaseAccessor<AppDatabase> with _$TransactionDaoMixin {
+})
+class TransactionDao extends DatabaseAccessor<AppDatabase>
+    with _$TransactionDaoMixin {
   final AppDatabase db;
 
   // Called by the AppDatabase class
@@ -102,7 +113,8 @@ class UserDao extends DatabaseAccessor<AppDatabase> with _$UserDaoMixin {
 }
 
 @UseDao(tables: [Categories])
-class CategoryDao extends DatabaseAccessor<AppDatabase> with _$CategoryDaoMixin {
+class CategoryDao extends DatabaseAccessor<AppDatabase>
+    with _$CategoryDaoMixin {
   final AppDatabase db;
 
   // Called by the AppDatabase class
@@ -122,17 +134,25 @@ class CategoryDao extends DatabaseAccessor<AppDatabase> with _$CategoryDaoMixin 
       update(categories).replace(category);
 }
 
-@UseDao(tables: [Transactions, Categories, Users],
-  queries: {
-  'getCategoriesCount':
-      'SELECT categories.name, count(categories.name)'
-          'from transactions '
-          'inner join categories on transactions.category = categories.id '
-          'where transactions.type = :type '
-          'group by (categories.name);'
-  }
-)
-class StatisticsDao extends DatabaseAccessor<AppDatabase> with _$StatisticsDaoMixin {
+@UseDao(tables: [
+  Transactions,
+  Categories,
+  Users
+], queries: {
+  'getCategoriesCount': 'select categories.name, count(categories.name)'
+      'from transactions '
+      'inner join categories on transactions.category = categories.id '
+      'where transactions.type = :type '
+      'group by (categories.name);',
+  'getUsersBalanceByType': 'select users.name, sum(transactions.amount) '
+      'from transactions '
+      'inner join users on transactions.user = users.id '
+      'where transactions.type = :type '
+      'group by users.name '
+      'order by sum(transactions.amount);'
+})
+class StatisticsDao extends DatabaseAccessor<AppDatabase>
+    with _$StatisticsDaoMixin {
   final AppDatabase db;
 
   // Called by the AppDatabase class

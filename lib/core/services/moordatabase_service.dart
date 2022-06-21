@@ -1,5 +1,7 @@
 import 'dart:developer';
 
+import 'package:moneylover/core/viewmodels/statistics/statistics_model.dart';
+
 import '../database/moor_database.dart';
 
 class MoorDatabaseService {
@@ -182,5 +184,9 @@ class MoorDatabaseService {
       print('Exception in getCategoriesCount(type): $e');
       print('Stack: $s');
     }
+  }
+
+  getUsersIncome() async {
+    return await _database.statisticsDao.getUsersBalanceByType('Приход').get();
   }
 }
